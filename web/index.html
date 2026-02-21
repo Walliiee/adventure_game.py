@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forest Adventure for Kids</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game">
+      <h1>🌲 Forest Adventure for Kids 🌟</h1>
+      <p class="subtitle">Pick choices together and see where the story goes!</p>
+
+      <section class="panel">
+        <div class="row">
+          <label for="playerName">Adventurer name:</label>
+          <input id="playerName" type="text" maxlength="24" placeholder="Explorer" />
+          <button id="startBtn">Start</button>
+          <button id="restartBtn" class="hidden">Restart</button>
+        </div>
+
+        <div class="stats" id="stats"></div>
+        <div class="story" id="story">Press <strong>Start</strong> to begin your adventure.</div>
+        <div class="choices" id="choices"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
