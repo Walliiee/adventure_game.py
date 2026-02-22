@@ -1,6 +1,6 @@
 """
-Act 1 training loop: study skills with questions, choose focus when all at baseline,
-advance time, check readiness. Returns (ready, player_name) or (False, name) if quit.
+Act 1 training loop: choose source + skill, answer questions, choose focus,
+advance time, and transition to Act 2 readiness.
 """
 from game.act1.state import (
     create_act1_state,
@@ -8,8 +8,8 @@ from game.act1.state import (
     all_at_baseline,
     is_ready,
 )
-from game.act1.constants import SKILLS, ACTIONS_PER_YEAR
-from game.act1.questions import QUESTIONS
+from game.act1.constants import ACTIONS_PER_YEAR
+from game.act1.questions import choose_question
 from game.act1 import cli as act1_cli
 
 
@@ -24,6 +24,7 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
         print("=" * 50)
         print("You're 7. In three years you can go out and catch friends.")
         print("Train hard: study each skill, then choose one primary and two supplementary.")
+        print("Learn solo or with Teacher, Mentor, Parent, and Pet.")
         print("When you're ready, you'll set out for Ridgecamp.")
         print("=" * 50)
 
@@ -33,13 +34,11 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
     while True:
         act1_cli.print_act1_stats(state)
 
-        # After enough actions, advance "year" message
         if state["actions"] > 0 and state["actions"] % ACTIONS_PER_YEAR == 0:
             y = current_year(state)
             if y <= 3:
                 print(f"\n--- Year {y} of 3 complete. Keep training! ---")
 
-        # When all four at baseline, force focus choice if not yet chosen
         if all_at_baseline(state) and not state["focus_chosen"]:
             state["focus_chosen"] = True
             state["primary"] = act1_cli.choose_primary(state)
@@ -50,12 +49,13 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
             print("\nFocus set. Keep training until primary reaches 4 and supplementaries reach 3.")
             continue
 
-        skill = act1_cli.choose_skill(state)
-        if skill is None:
+        source = act1_cli.choose_source()
+        if source is None:
             print("Training paused. Come back when you're ready.")
             return False, name
 
-        q = QUESTIONS[skill]
+        skill = act1_cli.choose_skill_for_source(state, source)
+        q = choose_question(state, source, skill)
         correct = act1_cli.ask_question(skill, q)
         if correct:
             state["skills"][skill] += 1

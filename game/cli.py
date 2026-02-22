@@ -3,20 +3,19 @@ CLI presentation and input: menus, prompts, banners, stats.
 """
 import sys
 
-# Use ASCII banner on Windows when console doesn't support emoji
+from game.constants import (
+    DIFFICULTY_DISPLAY,
+    DIFFICULTIES,
+    NPC_DISPLAY,
+)
+
+
+# Use ASCII fallback when console doesn't support unicode output.
 def _safe_print(text: str) -> None:
     try:
         print(text)
     except UnicodeEncodeError:
         print(text.encode("ascii", "replace").decode("ascii"))
-
-from game.constants import (
-    DIFFICULTY_DISPLAY,
-    DIFFICULTIES,
-    REGION_DISPLAY,
-    REGION_ALIASES,
-    NPC_DISPLAY,
-)
 
 
 def get_player_choice(options, aliases=None, prompt="Enter your choice: "):
@@ -24,59 +23,59 @@ def get_player_choice(options, aliases=None, prompt="Enter your choice: "):
     aliases = aliases or {}
     while True:
         for i, option in enumerate(options, 1):
-            print(f"{i}. {option}")
+            _safe_print(f"{i}. {option}")
         choice = input(prompt).strip().lower()
         if choice in {"quit", "q", "exit"}:
-            print("Thanks for playing!")
+            _safe_print("Thanks for playing!")
             sys.exit()
         if choice in aliases:
             return aliases[choice]
         if choice.isdigit() and 1 <= int(choice) <= len(options):
             return int(choice) - 1
-        print("Invalid choice. Try a number or keyword.")
+        _safe_print("Invalid choice. Try a number or keyword.")
 
 
 def choose_difficulty() -> str:
     """Prompt for difficulty; return 'story', 'classic', or 'hardcore'."""
-    print("Choose your difficulty:")
+    _safe_print("Choose your difficulty:")
     aliases = {"story": 0, "classic": 1, "hardcore": 2, "hard": 2}
     idx = get_player_choice(DIFFICULTY_DISPLAY, aliases)
     return DIFFICULTIES[idx]
 
 
 def print_banner() -> None:
-    print("\n" + "=" * 58)
-    print("  WILDLANDS: ORB CATCHER ADVENTURE")
-    print("=" * 58)
-    print("  Forest   Meadow   Ruins   River   Canyon")
-    print("=" * 58)
+    _safe_print("\n" + "=" * 58)
+    _safe_print("  WILDLANDS: ORB CATCHER ADVENTURE")
+    _safe_print("=" * 58)
+    _safe_print("  Forest   Meadow   Ruins   River   Canyon")
+    _safe_print("=" * 58)
 
 
 def show_characters() -> None:
-    print("\nYour crew in Ridgecamp:")
+    _safe_print("\nYour crew in Ridgecamp:")
     for line in NPC_DISPLAY:
-        print(line)
+        _safe_print(line)
 
 
 def display_intro(state: dict) -> None:
     print_banner()
-    print(f"Welcome, {state['name']}! Difficulty: {state['difficulty'].title()}")
-    print("You are an Orb Keeper. Catch small and big wild animals in circular capture orbs,")
-    print("then train and play with them so they become trusted companions.")
+    _safe_print(f"Welcome, {state['name']}! Difficulty: {state['difficulty'].title()}")
+    _safe_print("You are an Orb Keeper. Catch small and big wild animals in circular capture orbs,")
+    _safe_print("then train and play with them so they become trusted companions.")
     show_characters()
-    print("\nGoal: build a balanced team and win the Ridgecamp Exhibition Match.\n")
+    _safe_print("\nGoal: build a balanced team and win the Ridgecamp Exhibition Match.\n")
 
 
 def print_stats(state: dict) -> None:
     mini = state["balls"]["mini"]
     mega = state["balls"]["mega"]
-    print(f"\n[Day {state['turn']}] Health: {state['health']} | Mini Orbs: {mini} | Mega Orbs: {mega}")
+    _safe_print(f"\n[Day {state['turn']}] Health: {state['health']} | Mini Orbs: {mini} | Mega Orbs: {mega}")
     if state["captured"]:
-        print("Companions:")
+        _safe_print("Companions:")
         for pet in state["captured"]:
-            print(f" - {pet['name']} ({pet['size']}) Lv.{pet['level']} Bond:{pet['bond']} Mood:{pet['mood']}")
+            _safe_print(f" - {pet['name']} ({pet['size']}) Lv.{pet['level']} Bond:{pet['bond']} Mood:{pet['mood']}")
     else:
-        print("Companions: none yet")
+        _safe_print("Companions: none yet")
 
 
 DAY_MENU_OPTIONS = [
@@ -107,4 +106,4 @@ def ask_replay() -> bool:
             return True
         if response in {"n", "no"}:
             return False
-        print("Please enter 'y' or 'n'.")
+        _safe_print("Please enter 'y' or 'n'.")

@@ -2,7 +2,7 @@
 
 **Purpose:** Single place to see how far we are and what to do next. Update this when we complete work or change priorities. Agents should read this and suggest improvements that match the current phase.
 
-**Last updated:** Act 1 CLI + launcher (Act 1 → Act 2) in place; web Act 1 (act1.html) and 3D character page (character3d.html) added. All saved to project memory.
+**Last updated:** Added 3D UI technical design start plan (`docs/TECH_DESIGN_3D_UI.md`) with architecture + Milestone 1 interaction shell scope.
 
 ---
 
@@ -16,7 +16,7 @@ The narrative is **locked** in `NARRATIVE_DESIGN.md`. Next: implement or prototy
 
 - **Repo:** README, .gitignore, requirements.txt; non-game scripts in `examples/`.
 - **Codebase:** `game/` package (constants, state, world, capture, companions, cli, loop, main); launcher `adventure_game.py`.
-- **Act 1 (training 7→10):** `game/act1/` — create character (name), train 4 skills (Strength, Agility, Smarts, Spirit) with one multiple-choice question each, choose primary + 2 supplementary when all at baseline, Year 1/2/3 progression, readiness → transition to Act 2. Launcher runs Act 1 first; `--test` skips to Act 2.
+- **Act 1 (training 7→10):** `game/act1/` — create character (name), train 4 skills (Strength, Agility, Smarts, Spirit) with multi-question banks, source-based study (Solo/Teacher/Mentor/Parent/Pet), choose primary + 2 supplementary when all at baseline, Year 1/2/3 progression, readiness → transition to Act 2. Launcher runs Act 1 first; `--test` skips to Act 2.
 - **Act 2 (Keeper loop):** Explore → capture → train/play companions → exhibition; difficulty; replay.
 - **Narrative design:** Full story in `docs/NARRATIVE_DESIGN.md`: character pick (ground zero), 7→10 training, then Act 2 at 10.
 - **Project memory:** `docs/` + Cursor rule; `docs/VISUAL_INTERFACE.md` for web vs desktop UI options.
@@ -26,9 +26,11 @@ The narrative is **locked** in `NARRATIVE_DESIGN.md`. Next: implement or prototy
 
 ## In progress / Next 🔄
 
-1. **Harden and extend Act 1** (optional)
-   - More questions per skill; add Teacher/Mentor/Parent/Pet (consultation) per `ACT1_DESIGN.md`.
-2. **Do not yet**
+1. **Harden and tune Act 1**
+   - Balance question difficulty and progression pacing after consultation sources were added.
+2. **Start 3D UI Milestone 1 (Layer 2 aligned)**
+   - Implement the interaction shell from `TECH_DESIGN_3D_UI.md` (objective/prompt/toast + one Teacher interaction vertical slice).
+3. **Do not yet**
    - Add inventory, save/load, or map data (Layer 4) before Act 1 is in place.
    - Add lots of Act 2 world content (Layer 3) until the two-act structure is running.
 
