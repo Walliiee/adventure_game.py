@@ -14,7 +14,6 @@ def fortune():
     "Your shoes will make you happy today.",
     "Land is always on the mind of a flying bird.",
     ]
-    print("Your fortune cookie says: ", fortunes[random_fortune]) # prints the random fortune 
-    print(random_fortune, fortunes[random_fortune]) # for testing purposes only to see the random number and fortune generated
+    print("Your fortune cookie says:", fortunes[random_fortune])
 
 fortune()

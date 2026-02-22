@@ -1,4 +1,6 @@
 class BankAccount:
+    """Simple demo; auth checks are hardcoded for illustration only."""
+
     def __init__(self, first_name, last_name, account_id, account_type, pin, balance):
         self.first_name = first_name
         self.last_name = last_name
@@ -21,7 +23,7 @@ class BankAccount:
 
 
     def display_balance(self):
-      print('Dear ' + self.last_name + 'your total balance is: ' + self.balance)
+        print(f"Dear {self.last_name}, your total balance is: ${self.balance}")
 
 
 Mikes_account = BankAccount('Mike', 'Krohn', 3456789, 'Credit', 1234, 1036.55)

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wildlands — Training (Act 1)</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        display: block;
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        color: #123;
+        background: #e8f5e9;
+        background: linear-gradient(180deg, #d8f5d8, #f8fff4 35%);
+      }
+      main.game {
+        display: block;
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      .panel {
+        background: #fff;
+        border-radius: 16px;
+        padding: 1rem;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+      .act1-title { font-size: 1.5rem; margin-bottom: 0.25rem; }
+      .subtitle { margin-top: 0; }
+      .row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+      input, button {
+        border-radius: 10px;
+        border: 1px solid #cdd;
+        padding: 0.55rem 0.75rem;
+        font-size: 1rem;
+      }
+      button {
+        cursor: pointer;
+        background: #2f9e44;
+        color: white;
+        border: none;
+      }
+      button:hover { filter: brightness(1.05); }
+      .skill-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin: 0.75rem 0; }
+      .skill-card { background: #f0f8f0; border-radius: 10px; padding: 0.5rem 0.75rem; text-align: center; border: 2px solid #d4edd9; }
+      .skill-card.primary { border-color: #2f9e44; background: #e8f5e9; }
+      .skill-card.supplementary { border-color: #1c7ed6; background: #e3f2fd; }
+      .skill-name { font-weight: bold; font-size: 0.9rem; }
+      .skill-value { font-size: 1.25rem; color: #2f9e44; }
+      .year-badge { display: inline-block; background: #1c7ed6; color: white; padding: 0.25rem 0.5rem; border-radius: 8px; margin-left: 0.5rem; font-size: 0.9rem; }
+      .story { margin-top: 1rem; font-size: 1.1rem; line-height: 1.45; min-height: 60px; }
+      .stats { margin-top: 0.75rem; font-size: 0.95rem; color: #2b4; }
+      .choices { margin-top: 1rem; display: grid; gap: 0.6rem; }
+      .choice-btn { text-align: left; background: #fff; border: 2px solid #d4edd9; color: #123; }
+      .choice-btn:hover { border-color: #2f9e44; }
+      .question-block { background: #f8fcf8; border-radius: 12px; padding: 1rem; margin: 1rem 0; border: 2px solid #d4edd9; }
+      .question-text { font-size: 1.1rem; margin-bottom: 0.75rem; }
+      .answer-btn { display: block; width: 100%; text-align: left; margin-bottom: 0.5rem; padding: 0.6rem 1rem; }
+      .answer-btn.correct { border-color: #2f9e44; background: #e8f5e9; }
+      .answer-btn.wrong { border-color: #c62828; background: #ffebee; }
+      .feedback { margin-top: 0.75rem; font-weight: 500; }
+      .feedback.ok { color: #2e7d32; }
+      .feedback.fail { color: #c62828; }
+      .hidden { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <noscript><p style="padding:1rem;margin:1rem;background:#fff3cd;border-radius:8px;">JavaScript is required. Enable it and reload.</p></noscript>
+    <main class="game">
+      <h1 class="act1-title">Wildlands — Training (Ages 7 to 10)</h1>
+      <p class="subtitle">Get ready to become a Keeper. Train your skills, then set out for Ridgecamp.</p>
+
+      <section class="panel" id="panel">
+        <div id="screen-start">
+          <div class="row">
+            <label for="act1Name">Your name:</label>
+            <input id="act1Name" type="text" maxlength="24" placeholder="Keeper" />
+            <button id="act1StartBtn" type="button">Start training</button>
+          </div>
+          <p style="margin-top:1rem; color:#555;">You're 7. In three years you can go out and catch friends. Train hard: study each skill, then choose one primary and two supplementary. When you're ready, you'll set out for Ridgecamp.</p>
+          <p style="margin-top:0.5rem;"><a href="character3d.html">Play in 3D</a> — design a character and walk around with WASD.</p>
+        </div>
+
+        <div id="screen-training" class="hidden">
+          <div class="stats" id="act1Stats"></div>
+          <div class="story" id="act1Story"></div>
+          <div id="act1Choices" class="choices"></div>
+          <div id="act1Question" class="hidden question-block">
+            <div class="question-text" id="act1QuestionText"></div>
+            <div id="act1Answers"></div>
+            <div id="act1Feedback" class="feedback hidden"></div>
+          </div>
+        </div>
+
+        <div id="screen-focus" class="hidden">
+          <div class="story" id="focusStory"></div>
+          <div id="focusChoices" class="choices"></div>
+        </div>
+
+        <div id="screen-ready" class="hidden">
+          <div class="story" id="readyStory"></div>
+          <p style="margin-top:1rem;"><a href="index.html" style="display:inline-block; text-decoration:none;">Back to Forest Adventure</a></p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+(function () {
+  "use strict";
+  var SKILLS = ["Strength", "Agility", "Smarts", "Spirit"];
+  var BASELINE = 2;
+  var PRIMARY_THRESHOLD = 4;
+  var SUPPLEMENTARY_THRESHOLD = 3;
+  var ACTIONS_PER_YEAR = 10;
+  var QUESTIONS = {
+    Strength: { text: "What's the safest way to carry a heavy orb?", options: ["In one hand", "Close to your body with both hands", "On your head", "Tossing it"], correctIndex: 1 },
+    Agility: { text: "What's the best way to step so you don't startle a creature?", options: ["Stomp loudly", "Move slowly and quietly", "Run toward it", "Jump"], correctIndex: 1 },
+    Smarts: { text: "What do Moss Bunnies eat?", options: ["Berries", "Insects", "Grass and leaves", "Seeds"], correctIndex: 2 },
+    Spirit: { text: "What should you do if a creature looks scared?", options: ["Chase it", "Stay calm and still, speak softly", "Throw food at it", "Leave immediately"], correctIndex: 1 }
+  };
+  var state = null;
+
+  function getState() {
+    return { name: "", skills: { Strength: 0, Agility: 0, Smarts: 0, Spirit: 0 }, actions: 0, year: 1, primary: null, supplementary: [], focusChosen: false, screen: "start" };
+  }
+  function currentYearLabel() {
+    return "Year " + Math.min(3, Math.floor(state.actions / ACTIONS_PER_YEAR) + 1) + " of 3";
+  }
+  function allAtBaseline() {
+    return SKILLS.every(function(s) { return state.skills[s] >= BASELINE; });
+  }
+  function isReady() {
+    if (!state.focusChosen || state.primary === null || state.supplementary.length !== 2) return false;
+    if (Math.floor(state.actions / ACTIONS_PER_YEAR) < 2) return false;
+    if (state.skills[state.primary] < PRIMARY_THRESHOLD) return false;
+    if (state.supplementary.some(function(s) { return state.skills[s] < SUPPLEMENTARY_THRESHOLD; })) return false;
+    return true;
+  }
+  function showScreen(id) {
+    ["screen-start", "screen-training", "screen-focus", "screen-ready"].forEach(function(sid) {
+      var el = document.getElementById(sid);
+      if (el) el.classList.add("hidden");
+    });
+    var target = document.getElementById(id);
+    if (target) target.classList.remove("hidden");
+  }
+  function renderStats() {
+    var el = document.getElementById("act1Stats");
+    if (!el || !state) return;
+    var parts = SKILLS.map(function(s) {
+      var c = "skill-card";
+      if (state.primary === s) c += " primary";
+      if (state.supplementary.indexOf(s) !== -1) c += " supplementary";
+      return "<div class=\"" + c + "\"><span class=\"skill-name\">" + s + "</span><br><span class=\"skill-value\">" + state.skills[s] + "</span></div>";
+    });
+    el.innerHTML = "<div><span class=\"year-badge\">" + currentYearLabel() + "</span> Actions: " + state.actions + "</div><div class=\"skill-grid\">" + parts.join("") + "</div>";
+  }
+  function renderTrainingChoices() {
+    var storyEl = document.getElementById("act1Story");
+    var choicesEl = document.getElementById("act1Choices");
+    var questionEl = document.getElementById("act1Question");
+    if (questionEl) questionEl.classList.add("hidden");
+    if (storyEl) storyEl.textContent = "What do you want to study, " + state.name + "?";
+    if (!choicesEl) return;
+    choicesEl.innerHTML = "";
+    SKILLS.forEach(function(skill) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice-btn";
+      btn.textContent = "Study " + skill;
+      btn.addEventListener("click", function() { showQuestion(skill); });
+      choicesEl.appendChild(btn);
+    });
+  }
+  function showQuestion(skill) {
+    var q = QUESTIONS[skill];
+    if (!q) return;
+    var textEl = document.getElementById("act1QuestionText");
+    var answersEl = document.getElementById("act1Answers");
+    if (textEl) textEl.textContent = q.text;
+    if (answersEl) {
+      answersEl.innerHTML = "";
+      q.options.forEach(function(opt, i) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "answer-btn choice-btn";
+        btn.textContent = opt;
+        btn.addEventListener("click", function() { submitAnswer(skill, i, btn, answersEl); });
+        answersEl.appendChild(btn);
+      });
+    }
+    var feedbackEl = document.getElementById("act1Feedback");
+    if (feedbackEl) feedbackEl.classList.add("hidden");
+    var questionBlock = document.getElementById("act1Question");
+    if (questionBlock) questionBlock.classList.remove("hidden");
+  }
+  function submitAnswer(skill, chosenIndex, chosenBtn, answersEl) {
+    var q = QUESTIONS[skill];
+    var correct = chosenIndex === q.correctIndex;
+    var feedbackEl = document.getElementById("act1Feedback");
+    if (feedbackEl) {
+      feedbackEl.classList.remove("hidden", "ok", "fail");
+      feedbackEl.classList.add(correct ? "ok" : "fail");
+      feedbackEl.textContent = correct ? "Correct! +1 " + skill + "." : "Not quite. The right answer was: \"" + q.options[q.correctIndex] + "\". No change this time.";
+    }
+    if (answersEl) {
+      var btns = answersEl.querySelectorAll("button");
+      for (var i = 0; i < btns.length; i++) { btns[i].disabled = true; btns[i].classList.remove("correct", "wrong"); }
+      chosenBtn.classList.add(correct ? "correct" : "wrong");
+      if (!correct && answersEl.children[q.correctIndex]) answersEl.children[q.correctIndex].classList.add("correct");
+    }
+    if (correct) state.skills[skill] += 1;
+    state.actions += 1;
+    setTimeout(function() {
+      renderStats();
+      if (!state.focusChosen && allAtBaseline()) {
+        state.focusChosen = true;
+        showFocusScreen();
+        return;
+      }
+      if (isReady()) {
+        showReadyScreen();
+        return;
+      }
+      renderTrainingChoices();
+      var qb = document.getElementById("act1Question");
+      if (qb) qb.classList.add("hidden");
+    }, 1800);
+  }
+  function showFocusScreen() {
+    state.screen = "focus";
+    showScreen("screen-focus");
+    var focusStory = document.getElementById("focusStory");
+    if (focusStory) focusStory.textContent = "You're getting stronger in every way. Now choose one primary skill (your main focus) and two supplementary skills. You'll need to reach higher levels in those three by the time you're 10.";
+    var choicesEl = document.getElementById("focusChoices");
+    if (!choicesEl) return;
+    choicesEl.innerHTML = "";
+    var row1 = document.createElement("p");
+    row1.innerHTML = "<strong>Pick your primary skill (must reach 4):</strong>";
+    choicesEl.appendChild(row1);
+    SKILLS.forEach(function(skill) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice-btn";
+      btn.textContent = skill;
+      btn.addEventListener("click", function() { choosePrimary(skill, choicesEl); });
+      choicesEl.appendChild(btn);
+    });
+  }
+  function choosePrimary(skill, choicesEl) {
+    state.primary = skill;
+    var others = SKILLS.filter(function(s) { return s !== skill; });
+    choicesEl.innerHTML = "";
+    var row2 = document.createElement("p");
+    row2.innerHTML = "<strong>Primary: " + skill + ". Now pick two supplementary skills (each must reach 3):</strong>";
+    choicesEl.appendChild(row2);
+    others.forEach(function(s) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice-btn";
+      btn.textContent = s;
+      btn.addEventListener("click", function() { chooseSupplementary(s, choicesEl); });
+      choicesEl.appendChild(btn);
+    });
+  }
+  function chooseSupplementary(skill, choicesEl) {
+    if (state.supplementary.indexOf(skill) !== -1) return;
+    state.supplementary.push(skill);
+    if (state.supplementary.length === 2) {
+      state.screen = "training";
+      showScreen("screen-training");
+      renderStats();
+      renderTrainingChoices();
+    } else {
+      var others = SKILLS.filter(function(s) { return s !== state.primary && state.supplementary.indexOf(s) === -1; });
+      choicesEl.innerHTML = "";
+      var row = document.createElement("p");
+      row.innerHTML = "<strong>Supplementary: " + state.supplementary.join(", ") + ". Pick one more:</strong>";
+      choicesEl.appendChild(row);
+      others.forEach(function(s) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn";
+        btn.textContent = s;
+        btn.addEventListener("click", function() { chooseSupplementary(s, choicesEl); });
+        choicesEl.appendChild(btn);
+      });
+    }
+  }
+  function showReadyScreen() {
+    state.screen = "ready";
+    showScreen("screen-ready");
+    var readyStory = document.getElementById("readyStory");
+    if (readyStory) readyStory.innerHTML = "You've turned 10. You're ready.<br><br>Your primary skill, <strong>" + state.primary + "</strong>, and your supplementary skills, <strong>" + state.supplementary.join("</strong> and <strong>") + "</strong>, are strong enough. You say goodbye and set out for Ridgecamp.<br><br><strong>Act 1 complete.</strong> To play Act 2, run: <code>python adventure_game.py</code>";
+  }
+  function startAct1() {
+    var nameInput = document.getElementById("act1Name");
+    state = getState();
+    state.name = (nameInput && nameInput.value ? nameInput.value.trim() : "Keeper") || "Keeper";
+    showScreen("screen-training");
+    renderStats();
+    renderTrainingChoices();
+  }
+  function init() {
+    var btn = document.getElementById("act1StartBtn");
+    if (btn) btn.addEventListener("click", startAct1);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+    </script>
+  </body>
+</html>

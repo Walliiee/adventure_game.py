@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wildlands — 3D Character</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      body { overflow: hidden; background: #1a1a2e; }
+      #canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
+      #ui {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        padding: 0.75rem 1rem;
+        background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent);
+        color: #eee;
+        font-family: "Segoe UI", sans-serif;
+        font-size: 0.9rem;
+        pointer-events: none;
+        z-index: 10;
+      }
+      #ui kbd { background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 4px; }
+      #design-panel {
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(30, 35, 50, 0.98);
+        color: #eee;
+        padding: 1.25rem;
+        border-radius: 12px;
+        font-family: "Segoe UI", sans-serif;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        z-index: 20;
+        pointer-events: auto;
+        min-width: 220px;
+      }
+      #design-panel.hidden { display: none; }
+      #design-panel h3 { margin-bottom: 0.75rem; font-size: 1rem; }
+      #design-panel label { display: block; margin-top: 0.5rem; font-size: 0.85rem; }
+      #design-panel input[type="color"] { width: 100%; height: 36px; margin-top: 0.25rem; border: none; border-radius: 8px; cursor: pointer; }
+      #design-panel input[type="range"] { width: 100%; margin-top: 0.25rem; }
+      #design-panel .btn { margin-top: 1rem; padding: 0.5rem 1rem; width: 100%; border: none; border-radius: 8px; background: #2f9e44; color: white; cursor: pointer; font-size: 0.95rem; }
+      #design-panel .btn:hover { background: #268836; }
+    </style>
+  </head>
+  <body>
+    <div id="ui">
+      Click to play · <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · Mouse to look · <kbd>C</kbd> design · <kbd>Esc</kbd> release mouse
+    </div>
+    <div id="design-panel" class="hidden">
+      <h3>Design your character</h3>
+      <label>Body color</label>
+      <input type="color" id="colorPicker" value="#4a9fd4" />
+      <label>Height <span id="heightValue">1.0</span></label>
+      <input type="range" id="heightSlider" min="0.7" max="1.4" step="0.05" value="1" />
+      <button class="btn" id="designDone">Done</button>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+    <script type="module" src="character3d.js"></script>
+  </body>
+</html>
