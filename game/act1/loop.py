@@ -33,6 +33,7 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
 
     while True:
         act1_cli.print_act1_stats(state)
+        act1_cli.print_training_guidance(state)
 
         if state["actions"] > 0 and state["actions"] % ACTIONS_PER_YEAR == 0:
             y = current_year(state)
@@ -57,8 +58,14 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
         skill = act1_cli.choose_skill_for_source(state, source)
         q = choose_question(state, source, skill)
         correct = act1_cli.ask_question(skill, q)
+
         if correct:
             state["skills"][skill] += 1
+            state["wrong_streak"] = 0
+        else:
+            state["wrong_streak"] += 1
+        act1_cli.print_stabilizer_feedback(state, skill, correct)
+
         state["actions"] += 1
 
         if is_ready(state):

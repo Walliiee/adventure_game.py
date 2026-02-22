@@ -22,6 +22,7 @@ class Act1State(TypedDict):
     supplementary: list[str]
     focus_chosen: bool
     last_question_idx: dict[str, int]
+    wrong_streak: int
 
 
 def create_act1_state(name: str) -> Act1State:
@@ -34,6 +35,7 @@ def create_act1_state(name: str) -> Act1State:
         "supplementary": [],
         "focus_chosen": False,
         "last_question_idx": {},
+        "wrong_streak": 0,
     }
 
 

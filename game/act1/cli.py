@@ -1,12 +1,24 @@
 """
 Act 1 CLI: prompts for name, learning source, skill choice, questions, focus.
 """
-from game.act1.constants import SKILLS
+from game.act1.constants import (
+    SKILLS,
+    BASELINE,
+    PRIMARY_THRESHOLD,
+    SUPPLEMENTARY_THRESHOLD,
+)
 from game.act1.questions import SOURCE_SKILLS
 from game.act1.state import Act1State, current_year
 
 
 SOURCES = ("Solo", "Teacher", "Mentor", "Parent", "Pet")
+
+COACHING_TIPS = {
+    "Strength": "Tip: think safety + body mechanics first.",
+    "Agility": "Tip: controlled movement beats rushing.",
+    "Smarts": "Tip: use habitat clues and Keeper rules.",
+    "Spirit": "Tip: calm, patience, and trust are strongest.",
+}
 
 
 def ask_act1_name() -> str:
@@ -67,6 +79,34 @@ def ask_question(skill: str, question: dict) -> bool:
                 print("Not quite. The right answer was:", opts[correct_idx])
             return correct
         print("Enter a number or letter for your choice.")
+
+
+def print_stabilizer_feedback(state: Act1State, skill: str, correct: bool) -> None:
+    """Provide light coaching to reduce frustration and guide progress."""
+    if correct:
+        print("Nice work. Keep momentum!")
+        return
+    if state["wrong_streak"] >= 2:
+        print(f"Coach: {COACHING_TIPS[skill]}")
+
+
+def print_training_guidance(state: Act1State) -> None:
+    """Show clear next-step guidance after each action."""
+    if not state["focus_chosen"]:
+        missing = [s for s in SKILLS if state["skills"][s] < BASELINE]
+        if missing:
+            print(f"Guidance: bring these to baseline ({BASELINE}): {', '.join(missing)}")
+        return
+
+    primary = state["primary"]
+    primary_left = PRIMARY_THRESHOLD - state["skills"][primary]
+    supp_left = {
+        s: SUPPLEMENTARY_THRESHOLD - state["skills"][s]
+        for s in state["supplementary"]
+    }
+    primary_msg = f"{primary} needs {max(0, primary_left)} more"
+    supp_msg = ", ".join(f"{s} needs {max(0, left)}" for s, left in supp_left.items())
+    print(f"Guidance: {primary_msg}; {supp_msg}.")
 
 
 def choose_primary(state: Act1State) -> str | None:

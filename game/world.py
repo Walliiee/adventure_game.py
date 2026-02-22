@@ -1,10 +1,17 @@
 """
-World and spawning: regions, creature discovery.
+World and spawning: regions, creature discovery, and light narrative beats.
 """
 import random
 from copy import deepcopy
 
-from game.constants import CREATURES, REGION_IDS, REGION_DISPLAY, REGION_ALIASES
+from game.constants import (
+    CREATURES,
+    REGION_IDS,
+    REGION_DISPLAY,
+    REGION_ALIASES,
+    REGION_FLAVOR,
+    NPC_SCENES_BY_REGION,
+)
 from game.cli import get_player_choice
 
 
@@ -15,6 +22,24 @@ def choose_region(state: dict) -> str:
     region = REGION_IDS[idx]
     state["region_progress"].add(region)
     return region
+
+
+def describe_region(region: str) -> str:
+    """Return flavor text for the chosen region."""
+    return REGION_FLAVOR.get(region, "You enter a quiet stretch of wild terrain.")
+
+
+def get_npc_scene(state: dict, region: str) -> str | None:
+    """Return one narrative NPC line per region, without repeating the same scene in a run."""
+    candidates = NPC_SCENES_BY_REGION.get(region, [])
+    if not candidates:
+        return None
+
+    unseen = [line for line in candidates if line not in state["seen_npc_scenes"]]
+    pool = unseen or candidates
+    scene = random.choice(pool)
+    state["seen_npc_scenes"].add(scene)
+    return scene
 
 
 def find_creature(region: str) -> dict:

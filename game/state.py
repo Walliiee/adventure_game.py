@@ -29,6 +29,7 @@ class GameState(TypedDict):
     region_progress: set[str]
     balls: dict[str, int]
     npc_bond: dict[str, int]
+    seen_npc_scenes: set[str]
 
 
 def create_game_state(player_name: str, difficulty: str) -> GameState:
@@ -42,4 +43,5 @@ def create_game_state(player_name: str, difficulty: str) -> GameState:
         "region_progress": set(),
         "balls": dict(BALLS_BY_DIFFICULTY[difficulty]),
         "npc_bond": {name: 0 for name in NPC_NAMES},
+        "seen_npc_scenes": set(),
     }

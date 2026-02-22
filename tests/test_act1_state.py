@@ -18,6 +18,11 @@ class TestAct1State(unittest.TestCase):
         state["actions"] = ACTIONS_PER_YEAR * 2
         self.assertTrue(is_ready(state))
 
+    def test_state_initializes_stabilizer_fields(self):
+        state = create_act1_state("Kid")
+        self.assertEqual(state["wrong_streak"], 0)
+        self.assertEqual(state["last_question_idx"], {})
+
 
 if __name__ == "__main__":
     unittest.main()
