@@ -30,6 +30,7 @@ The narrative is **locked** in `NARRATIVE_DESIGN.md`. Next: implement or prototy
    - Balance question difficulty and progression pacing after consultation sources were added.
 2. **Start 3D UI Milestone 1 (Layer 2 aligned)**
    - Implement the interaction shell from `TECH_DESIGN_3D_UI.md` (objective/prompt/toast + one Teacher interaction vertical slice).
+   - Track daily delivery with `docs/EXECUTION_CHECKLIST_WEEK1.md`.
 3. **Continue Layer 3 narrative seeding (small scope)**
    - Expand region flavor and short NPC moments with consequence hooks while keeping systems light.
 4. **Do not yet**
