@@ -1,8 +1,24 @@
 """
-Act 1 CLI: prompts for name, skill choice, questions, focus (primary + 2 supplementary).
+Act 1 CLI: prompts for name, learning source, skill choice, questions, focus.
 """
-from game.act1.constants import SKILLS
-from game.act1.state import current_year
+from game.act1.constants import (
+    SKILLS,
+    BASELINE,
+    PRIMARY_THRESHOLD,
+    SUPPLEMENTARY_THRESHOLD,
+)
+from game.act1.questions import SOURCE_SKILLS
+from game.act1.state import Act1State, current_year
+
+
+SOURCES = ("Solo", "Teacher", "Mentor", "Parent", "Pet")
+
+COACHING_TIPS = {
+    "Strength": "Tip: think safety + body mechanics first.",
+    "Agility": "Tip: controlled movement beats rushing.",
+    "Smarts": "Tip: use habitat clues and Keeper rules.",
+    "Spirit": "Tip: calm, patience, and trust are strongest.",
+}
 
 
 def ask_act1_name() -> str:
@@ -10,20 +26,32 @@ def ask_act1_name() -> str:
     return name or "Keeper"
 
 
-def choose_skill(state: dict) -> str | None:
-    """Return skill name or None to quit."""
-    print("\nWhat do you want to study?")
-    for i, skill in enumerate(SKILLS, 1):
-        val = state["skills"][skill]
-        print(f"  {i}. {skill} (current: {val})")
+def choose_source() -> str | None:
+    """Return source name or None to quit."""
+    print("\nWho do you want to study with?")
+    for i, source in enumerate(SOURCES, 1):
+        print(f"  {i}. {source}")
     print("  q. Quit")
     while True:
-        choice = input("Choice (1-4 or q): ").strip().lower()
+        choice = input("Choice (1-5 or q): ").strip().lower()
         if choice in ("q", "quit"):
             return None
-        if choice.isdigit() and 1 <= int(choice) <= 4:
-            return SKILLS[int(choice) - 1]
-        print("Enter 1, 2, 3, 4, or q.")
+        if choice.isdigit() and 1 <= int(choice) <= len(SOURCES):
+            return SOURCES[int(choice) - 1]
+        print("Enter 1, 2, 3, 4, 5, or q.")
+
+
+def choose_skill_for_source(state: Act1State, source: str) -> str:
+    """Return a skill supported by the chosen source."""
+    options = SOURCE_SKILLS[source]
+    print(f"\nWhat do you want to study with {source}?")
+    for i, skill in enumerate(options, 1):
+        print(f"  {i}. {skill} (current: {state['skills'][skill]})")
+    while True:
+        choice = input(f"Choice (1-{len(options)}): ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(options):
+            return options[int(choice) - 1]
+        print("Enter a number from the list.")
 
 
 def ask_question(skill: str, question: dict) -> bool:
@@ -53,7 +81,35 @@ def ask_question(skill: str, question: dict) -> bool:
         print("Enter a number or letter for your choice.")
 
 
-def choose_primary(state: dict) -> str | None:
+def print_stabilizer_feedback(state: Act1State, skill: str, correct: bool) -> None:
+    """Provide light coaching to reduce frustration and guide progress."""
+    if correct:
+        print("Nice work. Keep momentum!")
+        return
+    if state["wrong_streak"] >= 2:
+        print(f"Coach: {COACHING_TIPS[skill]}")
+
+
+def print_training_guidance(state: Act1State) -> None:
+    """Show clear next-step guidance after each action."""
+    if not state["focus_chosen"]:
+        missing = [s for s in SKILLS if state["skills"][s] < BASELINE]
+        if missing:
+            print(f"Guidance: bring these to baseline ({BASELINE}): {', '.join(missing)}")
+        return
+
+    primary = state["primary"]
+    primary_left = PRIMARY_THRESHOLD - state["skills"][primary]
+    supp_left = {
+        s: SUPPLEMENTARY_THRESHOLD - state["skills"][s]
+        for s in state["supplementary"]
+    }
+    primary_msg = f"{primary} needs {max(0, primary_left)} more"
+    supp_msg = ", ".join(f"{s} needs {max(0, left)}" for s, left in supp_left.items())
+    print(f"Guidance: {primary_msg}; {supp_msg}.")
+
+
+def choose_primary(state: Act1State) -> str | None:
     """After all at baseline: pick one primary skill."""
     print("\nYou're getting stronger in every way. Choose one PRIMARY skill (you must reach 4).")
     for i, skill in enumerate(SKILLS, 1):
@@ -65,7 +121,7 @@ def choose_primary(state: dict) -> str | None:
         print("Enter 1, 2, 3, or 4.")
 
 
-def choose_supplementary(state: dict) -> str | None:
+def choose_supplementary(state: Act1State) -> str | None:
     """Pick supplementary skill(s); need 2 total. Return chosen skill or None to skip."""
     need = 2 - len(state["supplementary"])
     if need <= 0:
@@ -81,7 +137,7 @@ def choose_supplementary(state: dict) -> str | None:
         print("Enter a number from the list.")
 
 
-def print_act1_stats(state: dict) -> None:
+def print_act1_stats(state: Act1State) -> None:
     year = current_year(state)
     print(f"\n--- Year {year} of 3 | Actions: {state['actions']} ---")
     for skill in SKILLS:
@@ -94,7 +150,7 @@ def print_act1_stats(state: dict) -> None:
         print(f"  {skill}: {val}{tag}")
 
 
-def print_ready_message(state: dict) -> None:
+def print_ready_message(state: Act1State) -> None:
     print("\n" + "=" * 50)
     print("You've turned 10. You're ready.")
     print(f"Your primary skill, {state['primary']}, and your supplementary skills,")

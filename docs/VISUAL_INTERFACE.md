@@ -42,6 +42,10 @@
 
 ---
 
+## Technical design
+
+- For the planned 3D interaction upgrade, use `docs/TECH_DESIGN_3D_UI.md` as the implementation reference (architecture, milestones, acceptance criteria).
+
 ## Recommendation
 
 - For **testing and playing right now:** Use the **CLI** (`python adventure_game.py` for full journey, `python adventure_game.py --test` to skip Act 1).

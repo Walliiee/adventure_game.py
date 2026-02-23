@@ -1,9 +1,8 @@
 """
 Main game loop: one session from intro until win, quit, or game over.
 """
-from game.state import create_game_state
-from game.cli import display_intro, print_stats, day_menu, ask_replay
-from game.world import choose_region, find_creature
+from game.cli import display_intro, print_stats, day_menu
+from game.world import choose_region, find_creature, describe_region, get_npc_scene
 from game.capture import attempt_capture
 from game.companions import train_companion, play_with_companion, run_exhibition
 
@@ -19,6 +18,11 @@ def run_session(state: dict) -> None:
 
         if choice == 0:
             region = choose_region(state)
+            print(f"\n{describe_region(region)}")
+            scene = get_npc_scene(state, region)
+            if scene:
+                print(scene)
+
             creature = find_creature(region)
             print(
                 f"\nYou discover a {creature['size']} wild animal: {creature['name']} "

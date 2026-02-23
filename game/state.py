@@ -1,7 +1,10 @@
 """
-Game state: creation and structure. State is a dict for simplicity;
-all keys are defined here.
+Game state: creation and structure.
 """
+from __future__ import annotations
+
+from typing import TypedDict
+
 from game.constants import (
     BALLS_BY_DIFFICULTY,
     HEALTH_BY_DIFFICULTY,
@@ -9,7 +12,27 @@ from game.constants import (
 )
 
 
-def create_game_state(player_name: str, difficulty: str) -> dict:
+class Companion(TypedDict):
+    name: str
+    size: str
+    level: int
+    bond: int
+    mood: str
+
+
+class GameState(TypedDict):
+    name: str
+    difficulty: str
+    health: int
+    captured: list[Companion]
+    turn: int
+    region_progress: set[str]
+    balls: dict[str, int]
+    npc_bond: dict[str, int]
+    seen_npc_scenes: set[str]
+
+
+def create_game_state(player_name: str, difficulty: str) -> GameState:
     """Build a fresh game state for the given player and difficulty."""
     return {
         "name": player_name,
@@ -18,6 +41,7 @@ def create_game_state(player_name: str, difficulty: str) -> dict:
         "captured": [],
         "turn": 1,
         "region_progress": set(),
-        "balls": dict(BALLS_BY_DIFFICULTY[difficulty]),  # mutable copy
+        "balls": dict(BALLS_BY_DIFFICULTY[difficulty]),
         "npc_bond": {name: 0 for name in NPC_NAMES},
+        "seen_npc_scenes": set(),
     }
