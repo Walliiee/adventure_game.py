@@ -4,13 +4,22 @@ advance time, and transition to Act 2 readiness.
 """
 from game.act1.state import (
     create_act1_state,
-    current_year,
     all_at_baseline,
     is_ready,
 )
 from game.act1.constants import ACTIONS_PER_YEAR
 from game.act1.questions import choose_question
 from game.act1 import cli as act1_cli
+
+
+def year_completion_message(actions: int) -> str | None:
+    """Return year completion banner text when a training year is finished."""
+    if actions <= 0 or actions % ACTIONS_PER_YEAR != 0:
+        return None
+    completed_year = actions // ACTIONS_PER_YEAR
+    if completed_year >= 3:
+        return None
+    return f"\n--- Year {completed_year} of 3 complete. Keep training! ---"
 
 
 def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
@@ -35,10 +44,9 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
         act1_cli.print_act1_stats(state)
         act1_cli.print_training_guidance(state)
 
-        if state["actions"] > 0 and state["actions"] % ACTIONS_PER_YEAR == 0:
-            y = current_year(state)
-            if y <= 3:
-                print(f"\n--- Year {y} of 3 complete. Keep training! ---")
+        message = year_completion_message(state["actions"])
+        if message:
+            print(message)
 
         if all_at_baseline(state) and not state["focus_chosen"]:
             state["focus_chosen"] = True

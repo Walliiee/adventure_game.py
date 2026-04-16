@@ -36,6 +36,16 @@ You create your character (name), train from age 7→10 (four skills, questions,
 python adventure_game.py --test
 ```
 
+## MVP playtest checklist
+
+Use this quick loop for first-pass playability checks:
+
+1. Run the full path (`python adventure_game.py`), enter a name, and confirm Act 1 starts.
+2. Train until you select primary + supplementary skills, then confirm guidance remains clear.
+3. Reach Ridgecamp (Act 2), choose a difficulty, and perform at least one camp action.
+4. Quit from the camp menu and confirm replay prompt behaves correctly.
+5. Run quick path (`python adventure_game.py --test`) and verify immediate Act 2 access.
+
 **Web (visual):**  
 - **Best:** run a local server so the page loads correctly. From the project root: `cd web && python -m http.server 8080` then open **http://localhost:8080/act1.html** (or index.html, character3d.html).
 - Act 1 Training: `web/act1.html` is **self-contained** (CSS and JS inlined) so it can also be opened directly from the `web/` folder in your browser.

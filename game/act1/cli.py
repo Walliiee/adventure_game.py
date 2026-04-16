@@ -8,7 +8,12 @@ from game.act1.constants import (
     SUPPLEMENTARY_THRESHOLD,
 )
 from game.act1.questions import SOURCE_SKILLS
-from game.act1.state import Act1State, current_year
+from game.act1.state import (
+    Act1State,
+    actions_until_year_three,
+    current_year,
+    focus_thresholds_met,
+)
 
 
 SOURCES = ("Solo", "Teacher", "Mentor", "Parent", "Pet")
@@ -98,6 +103,15 @@ def print_training_guidance(state: Act1State) -> None:
             print(f"Guidance: bring these to baseline ({BASELINE}): {', '.join(missing)}")
         return
 
+    if focus_thresholds_met(state):
+        remaining = actions_until_year_three(state)
+        if remaining > 0:
+            print(
+                f"Guidance: skill targets met. Keep training {remaining} more action(s) "
+                "to reach Year 3 (age 10)."
+            )
+        return
+
     primary = state["primary"]
     primary_left = PRIMARY_THRESHOLD - state["skills"][primary]
     supp_left = {
@@ -106,7 +120,11 @@ def print_training_guidance(state: Act1State) -> None:
     }
     primary_msg = f"{primary} needs {max(0, primary_left)} more"
     supp_msg = ", ".join(f"{s} needs {max(0, left)}" for s, left in supp_left.items())
-    print(f"Guidance: {primary_msg}; {supp_msg}.")
+    remaining = actions_until_year_three(state)
+    if remaining > 0:
+        print(f"Guidance: {primary_msg}; {supp_msg}. Year goal: {remaining} more action(s) to age 10.")
+    else:
+        print(f"Guidance: {primary_msg}; {supp_msg}.")
 
 
 def choose_primary(state: Act1State) -> str | None:
