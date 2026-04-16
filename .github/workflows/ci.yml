@@ -1,0 +1,35 @@
+name: Python quality checks
+
+on:
+  pull_request:
+  push:
+    branches: ["main", "work", "copilot/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+
+      - name: Lint (ruff)
+        run: python -m ruff check .
+
+      - name: Type check (mypy)
+        run: python -m mypy game/state.py game/act1/state.py
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -p "test_*.py"

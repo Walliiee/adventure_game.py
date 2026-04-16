@@ -43,8 +43,26 @@ python adventure_game.py --test
 
 ## Requirements
 
-- **Python 3.9+** (standard library only for the CLI game)
+- **Python 3.10+** (standard library only for the CLI game)
 - Optional deps in `requirements.txt` (e.g. for scripts in `examples/`).
+
+## Development and quality
+
+Install optional dev tooling:
+
+```bash
+pip install -e ".[dev]"
+```
+
+Run local quality checks:
+
+```bash
+python -m ruff check .
+python -m mypy game/state.py game/act1/state.py
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+CI runs the same checks on pull requests and pushes.
 
 ## Other scripts
 
@@ -57,3 +75,10 @@ Standalone demos and exercises live in **`examples/`**. Run with `python example
 ## Roadmap
 
 See **GAME_IMPROVEMENT_IDEAS.md** for idea backlog. Execution order follows **`docs/DEVELOPMENT_PHASES.md`**.
+
+## Contributing and release notes
+
+- Contribution guide: `CONTRIBUTING.md`
+- Architecture overview: `docs/ARCHITECTURE.md`
+- Current version: `VERSION`
+- Change history: `CHANGELOG.md`

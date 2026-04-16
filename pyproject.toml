@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wildlands-adventure-game"
+version = "0.1.0"
+description = "Wildlands: Orb Catcher Adventure CLI and web prototype"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Wildlands contributors" }]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.11.0", "mypy>=1.10.0"]
+
+[tool.setuptools.packages.find]
+include = ["game*"]
+exclude = ["web*", "examples*", "tests*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+exclude = [".git", ".venv", "venv", "__pycache__", "examples", "web"]
+
+[tool.ruff.lint]
+select = ["E9", "F"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = false
+ignore_missing_imports = true
+follow_imports = "skip"
