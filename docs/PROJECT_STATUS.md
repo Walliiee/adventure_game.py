@@ -2,7 +2,7 @@
 
 **Purpose:** Single place to see how far we are and what to do next. Update this when we complete work or change priorities. Agents should read this and suggest improvements that match the current phase.
 
-**Last updated:** Act 1 stabilization pass started (guidance + anti-frustration coaching) and Layer 3 narrative start added to Act 2 (region flavor + NPC scenes).
+**Last updated:** Engineering baseline hardening pass added (CI quality gates, canonical tooling config, contributor guide, architecture doc, and extra regression tests).
 
 ---
 
@@ -15,11 +15,13 @@ The narrative is **locked** in `NARRATIVE_DESIGN.md`. Next: implement or prototy
 ## Done ✅
 
 - **Repo:** README, .gitignore, requirements.txt; non-game scripts in `examples/`.
+- **Engineering baseline:** CI workflow now runs lint (`ruff`), type checks (`mypy` on typed state modules), and unit tests; canonical config added in `pyproject.toml`; `CONTRIBUTING.md`, `docs/ARCHITECTURE.md`, `VERSION`, and `CHANGELOG.md` established.
 - **Codebase:** `game/` package (constants, state, world, capture, companions, cli, loop, main); launcher `adventure_game.py`.
 - **Act 1 (training 7→10):** `game/act1/` — create character (name), train 4 skills (Strength, Agility, Smarts, Spirit) with multi-question banks, source-based study (Solo/Teacher/Mentor/Parent/Pet), choose primary + 2 supplementary when all at baseline, Year 1/2/3 progression, readiness → transition to Act 2. Launcher runs Act 1 first; `--test` skips to Act 2.
 - **Act 2 (Keeper loop):** Explore → capture → train/play companions → exhibition; difficulty; replay. Added region flavor + NPC scenes in Act 2 exploration (first Layer 3 narrative starter).
 - **Narrative design:** Full story in `docs/NARRATIVE_DESIGN.md`: character pick (ground zero), 7→10 training, then Act 2 at 10.
 - **Project memory:** `docs/` + Cursor rule; `docs/VISUAL_INTERFACE.md` for web vs desktop UI options.
+- **Testing depth:** Added regression tests for CLI input error handling and world spawning/NPC scene edge behavior.
 - **Web — 3D character:** `web/character3d.html` + `web/character3d.js` — Three.js (CDN, import map); design panel (body color, height slider); third-person character (cylinder + sphere); WASD + mouse look (PointerLock); ground and obstacles to walk around. Linked from `web/act1.html` and `web/index.html`.
 
 ---

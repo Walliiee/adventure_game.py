@@ -12,6 +12,7 @@ This folder is **authoritative project memory** for Wildlands. Any agent or huma
 4. **PROJECT_STATUS.md** — What’s done, what we’re doing now, and what comes next. Update it when we complete work or change priorities.
 5. **TECH_DESIGN_3D_UI.md** — Technical start plan for a better interactive 3D UI, milestones, architecture, and constraints. Read when working on `web/character3d.*` or 3D UI scope.
 6. **EXECUTION_CHECKLIST_WEEK1.md** — Short sprint checklist for immediate implementation sequencing of the 3D Milestone 1 vertical slice.
+7. **ARCHITECTURE.md** — High-level code layout and ownership for contributors.
 
 ---
 
