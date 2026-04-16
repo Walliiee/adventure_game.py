@@ -80,7 +80,7 @@ Ship a minimal, stable version that is immediately playable end-to-end so you ca
 - [x] Iteration 1: Clarify Act 1 Year-3 readiness gate guidance and fix year-complete message numbering.
 - [x] Iteration 1 checks: `ruff`, `mypy` targets, `unittest`, parallel validation.
 - [x] Iteration 2: Prevent day/turn advancement when player picks an unavailable Act 2 action (no companion to train/play, exhibition not ready).
-- [ ] Iteration 2 checks: `ruff`, `mypy` targets, `unittest`, parallel validation.
+- [x] Iteration 2 checks: `ruff`, `mypy` targets, `unittest`, parallel validation.
 
 ## Iteration Notes
 
@@ -90,7 +90,8 @@ Ship a minimal, stable version that is immediately playable end-to-end so you ca
 - Corrected year completion banner text to reference completed year.
 - Added targeted tests and README MVP checklist.
 
-### Iteration 2 (completed in code; validation pending)
+### Iteration 2 (completed)
 - Prioritized blocker: selecting an unavailable action in Act 2 still consumed a day, which penalized first-time players.
 - Implemented fix: day/turn now advances only when an action actually executes.
 - Added targeted regression tests for no-companion and not-ready exhibition day behavior.
+- Re-ran checks and parallel validation successfully.

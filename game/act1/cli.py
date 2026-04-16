@@ -108,7 +108,7 @@ def print_training_guidance(state: Act1State) -> None:
         if remaining > 0:
             print(
                 f"Guidance: skill targets met. Keep training {remaining} more action(s) "
-                "to reach Year 3 (age 10)."
+                f"to reach Year 3 (age 10)."
             )
         return
 
@@ -122,7 +122,10 @@ def print_training_guidance(state: Act1State) -> None:
     supp_msg = ", ".join(f"{s} needs {max(0, left)}" for s, left in supp_left.items())
     remaining = actions_until_year_three(state)
     if remaining > 0:
-        print(f"Guidance: {primary_msg}; {supp_msg}. Year goal: {remaining} more action(s) to age 10.")
+        print(
+            f"Guidance: {primary_msg}; {supp_msg}. "
+            f"Year goal: {remaining} more action(s) to age 10."
+        )
     else:
         print(f"Guidance: {primary_msg}; {supp_msg}.")
 

@@ -47,7 +47,7 @@ def play_with_companion(state: dict) -> bool:
 
 
 def run_exhibition(state: dict) -> tuple[bool, bool]:
-    """Run the exhibition match. Returns (won, action_performed)."""
+    """Run the exhibition match. Returns tuple[won: bool, action_performed: bool]."""
     print("\n🏟️ Ridgecamp Exhibition Match begins!")
     if len(state["captured"]) < MIN_COMPANIONS_FOR_EXHIBITION:
         print("You needed at least 2 companions to compete. You are not ready yet.")

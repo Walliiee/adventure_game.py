@@ -15,7 +15,7 @@ def run_session(state: dict) -> None:
 
     while state["health"] > 0:
         choice = day_menu(state)
-        action_performed = True
+        action_performed = False
 
         if choice == 0:
             region = choose_region(state)
@@ -30,13 +30,13 @@ def run_session(state: dict) -> None:
                 f"({creature['temperament']})."
             )
             attempt_capture(state, creature)
+            action_performed = True
         elif choice == 1:
             action_performed = train_companion(state)
         elif choice == 2:
             action_performed = play_with_companion(state)
         elif choice == 3:
             print_stats(state)
-            continue
         elif choice == 4:
             won, action_performed = run_exhibition(state)
             if won:
