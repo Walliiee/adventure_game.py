@@ -5,7 +5,7 @@ Thanks for contributing to Wildlands: Orb Catcher Adventure.
 ## Local setup
 
 1. Use Python 3.10+.
-2. From `/home/runner/work/adventure_game.py/adventure_game.py`, install optional dev tools:
+2. From the repository root, install optional dev tools:
    - `python -m pip install --upgrade pip`
    - `pip install -e ".[dev]"`
 3. Run the game:
@@ -19,7 +19,7 @@ Thanks for contributing to Wildlands: Orb Catcher Adventure.
 
 ## Architecture and scope alignment
 
-- Read `/home/runner/work/adventure_game.py/adventure_game.py/docs/README.md`.
+- Read `docs/README.md`.
 - Keep changes aligned with the current phase in `docs/DEVELOPMENT_PHASES.md`.
 - Respect the two-act narrative flow in `docs/NARRATIVE_DESIGN.md`.
 - For code layout, see `docs/ARCHITECTURE.md`.
