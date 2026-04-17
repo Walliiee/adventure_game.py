@@ -1,7 +1,7 @@
 import unittest
 
 from game.act1.constants import ACTIONS_PER_YEAR
-from game.act1.state import create_act1_state, is_ready
+from game.act1.state import actions_until_year_three, create_act1_state, is_ready
 
 
 class TestAct1State(unittest.TestCase):
@@ -22,6 +22,16 @@ class TestAct1State(unittest.TestCase):
         state = create_act1_state("Kid")
         self.assertEqual(state["wrong_streak"], 0)
         self.assertEqual(state["last_question_idx"], {})
+
+    def test_actions_until_year_three_counts_down(self):
+        state = create_act1_state("Kid")
+        self.assertEqual(actions_until_year_three(state), ACTIONS_PER_YEAR * 2)
+
+        state["actions"] = ACTIONS_PER_YEAR
+        self.assertEqual(actions_until_year_three(state), ACTIONS_PER_YEAR)
+
+        state["actions"] = ACTIONS_PER_YEAR * 2
+        self.assertEqual(actions_until_year_three(state), 0)
 
 
 if __name__ == "__main__":

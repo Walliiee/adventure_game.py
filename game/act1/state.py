@@ -48,14 +48,27 @@ def all_at_baseline(state: Act1State) -> bool:
     return all(state["skills"][s] >= BASELINE for s in SKILLS)
 
 
-def is_ready(state: Act1State) -> bool:
-    """Ready at 10: Year 3, focus chosen, primary >= 4, both supplementary >= 3."""
+def focus_thresholds_met(state: Act1State) -> bool:
+    """Return True when focus has been chosen and skill thresholds are met."""
     if not state["focus_chosen"] or state["primary"] is None or len(state["supplementary"]) != 2:
-        return False
-    if current_year(state) < 3:
         return False
     if state["skills"][state["primary"]] < PRIMARY_THRESHOLD:
         return False
     if any(state["skills"][s] < SUPPLEMENTARY_THRESHOLD for s in state["supplementary"]):
+        return False
+    return True
+
+
+def actions_until_year_three(state: Act1State) -> int:
+    """Actions remaining until Year 3 begins (age 10 threshold)."""
+    year_three_start = ACTIONS_PER_YEAR * 2
+    return max(0, year_three_start - state["actions"])
+
+
+def is_ready(state: Act1State) -> bool:
+    """Ready at 10: Year 3, focus chosen, primary >= 4, both supplementary >= 3."""
+    if not focus_thresholds_met(state):
+        return False
+    if current_year(state) < 3:
         return False
     return True
