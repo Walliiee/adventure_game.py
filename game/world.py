@@ -26,6 +26,7 @@ def choose_region(state: dict) -> str:
     # Also track for achievements/endings
     state["regions_visited"] = state.get("regions_visited", set())
     state["regions_visited"].add(region)
+    state["current_region"] = region
     return region
 
 

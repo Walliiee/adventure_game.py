@@ -88,7 +88,7 @@ DAY_MENU_OPTIONS = [
     "Quit adventure",
 ]
 DAY_MENU_ALIASES = {
-    "explore": 0, "train": 1, "play": 2, "stats": 3, "match": 4, "save": 5, "quit": 6, "q": 6,
+    "explore": 0, "train": 1, "play": 2, "stats": 3, "match": 4, "save": 5, "quit": 6, "q": 6, "i": -1, "use": -2,
 }
 
 

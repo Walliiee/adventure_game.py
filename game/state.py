@@ -36,6 +36,7 @@ class GameState(TypedDict):
     exhibition_perfect_win: bool
     exhibition_won: bool
     achievements_unlocked: list[str]
+    inventory: dict[str, int]
 
 
 def create_game_state(player_name: str, difficulty: str) -> GameState:
@@ -56,4 +57,5 @@ def create_game_state(player_name: str, difficulty: str) -> GameState:
         "exhibition_perfect_win": False,
         "exhibition_won": False,
         "achievements_unlocked": [],
+        "inventory": {"healing_herb": 2, "capture_charm": 1},
     }
