@@ -28,6 +28,7 @@ def attempt_capture(state: dict, creature: dict) -> None:
     if pick == 2:
         print(f"You offer food to {creature['name']}. It relaxes and wanders away peacefully.")
         state["health"] += 1
+        state["peaceful_leaves"] = state.get("peaceful_leaves", 0) + 1
         return
 
     chosen = ball_type if pick == 0 else alt_ball

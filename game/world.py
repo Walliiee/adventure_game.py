@@ -23,6 +23,9 @@ def choose_region(state: dict) -> str:
     idx = get_player_choice(REGION_DISPLAY, REGION_ALIASES)
     region = REGION_IDS[idx]
     state["region_progress"].add(region)
+    # Also track for achievements/endings
+    state["regions_visited"] = state.get("regions_visited", set())
+    state["regions_visited"].add(region)
     return region
 
 

@@ -58,8 +58,15 @@ def run_exhibition(state: dict) -> tuple[bool, bool]:
     threshold = EXHIBITION_THRESHOLD[state["difficulty"]]
 
     print(f"Team Power: {team_power} | Synergy Bonus: {bonus} | Target: {threshold}")
-    if team_power + bonus >= threshold:
+    
+    # Check for perfect win (exact threshold match)
+    total_score = team_power + bonus
+    if total_score == threshold:
+        state["exhibition_perfect_win"] = True
+    
+    if total_score >= threshold:
         print("🎉 Your companions perform brilliantly. Ridgecamp crowns you Champion Keeper!")
+        state["exhibition_won"] = True
         return True, True
     print("Ari wins this season, but your team shows promise. Train harder and return.")
     return False, True

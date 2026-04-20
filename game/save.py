@@ -14,6 +14,7 @@ def _serialize(state: GameState) -> dict:
     out = dict(state)
     out["region_progress"] = sorted(state["region_progress"])
     out["seen_npc_scenes"] = sorted(state["seen_npc_scenes"])
+    out["regions_visited"] = sorted(state.get("regions_visited", set()))
     return out
 
 
@@ -21,6 +22,12 @@ def _deserialize(data: dict) -> GameState:
     """Convert lists back to sets."""
     data["region_progress"] = set(data.get("region_progress", []))
     data["seen_npc_scenes"] = set(data.get("seen_npc_scenes", []))
+    data["regions_visited"] = set(data.get("regions_visited", []))
+    # Ensure new fields have defaults for backward compatibility
+    data.setdefault("peaceful_leaves", 0)
+    data.setdefault("exhibition_perfect_win", False)
+    data.setdefault("exhibition_won", False)
+    data.setdefault("achievements_unlocked", [])
     return data
 
 

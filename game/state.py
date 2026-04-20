@@ -30,6 +30,12 @@ class GameState(TypedDict):
     balls: dict[str, int]
     npc_bond: dict[str, int]
     seen_npc_scenes: set[str]
+    # Tracking for endings and achievements
+    regions_visited: set[str]
+    peaceful_leaves: int
+    exhibition_perfect_win: bool
+    exhibition_won: bool
+    achievements_unlocked: list[str]
 
 
 def create_game_state(player_name: str, difficulty: str) -> GameState:
@@ -44,4 +50,10 @@ def create_game_state(player_name: str, difficulty: str) -> GameState:
         "balls": dict(BALLS_BY_DIFFICULTY[difficulty]),
         "npc_bond": {name: 0 for name in NPC_NAMES},
         "seen_npc_scenes": set(),
+        # Tracking for endings and achievements
+        "regions_visited": set(),
+        "peaceful_leaves": 0,
+        "exhibition_perfect_win": False,
+        "exhibition_won": False,
+        "achievements_unlocked": [],
     }

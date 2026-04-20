@@ -6,6 +6,8 @@ from game.world import choose_region, find_creature, describe_region, get_npc_sc
 from game.capture import attempt_capture
 from game.companions import train_companion, play_with_companion, run_exhibition
 from game.save import save_game, load_game, has_save
+from game.endings import show_ending
+from game.achievements import check_achievements, show_achievement
 
 
 def start_game(fresh_state_factory) -> dict:
@@ -24,6 +26,14 @@ def start_game(fresh_state_factory) -> dict:
         else:
             print("Starting a new adventure!")
     return fresh_state_factory()
+
+
+def _check_and_show_achievements(state: dict) -> None:
+    """Check for newly unlocked achievements and display them."""
+    newly_unlocked = check_achievements(state)
+    for ach_id in newly_unlocked:
+        show_achievement(ach_id)
+        state["achievements_unlocked"].append(ach_id)
 
 
 def run_session(state: dict) -> None:
@@ -59,6 +69,8 @@ def run_session(state: dict) -> None:
         elif choice == 4:
             won, action_performed = run_exhibition(state)
             if won:
+                _check_and_show_achievements(state)
+                show_ending(state)
                 save_game(state)
                 return
         elif choice == 5:
@@ -72,7 +84,9 @@ def run_session(state: dict) -> None:
 
         if action_performed:
             state["turn"] += 1
+            _check_and_show_achievements(state)
             save_game(state)
         if state["health"] <= 0:
             print("\nYou collapse from exhaustion. Your companions guard you until help arrives.")
+            show_ending(state)
             return
