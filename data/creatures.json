@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Moss Bunny",
+    "size": "small",
+    "habitat": "meadow",
+    "temperament": "gentle",
+    "base_catch": 0.78
+  },
+  {
+    "name": "Spark Finch",
+    "size": "small",
+    "habitat": "ruins",
+    "temperament": "curious",
+    "base_catch": 0.74
+  },
+  {
+    "name": "Pebble Otter",
+    "size": "small",
+    "habitat": "river",
+    "temperament": "playful",
+    "base_catch": 0.72
+  },
+  {
+    "name": "Iron Tusk",
+    "size": "big",
+    "habitat": "canyon",
+    "temperament": "stubborn",
+    "base_catch": 0.4
+  },
+  {
+    "name": "Thunder Yak",
+    "size": "big",
+    "habitat": "highlands",
+    "temperament": "proud",
+    "base_catch": 0.36
+  },
+  {
+    "name": "Moonclaw Lynx",
+    "size": "big",
+    "habitat": "forest",
+    "temperament": "fierce",
+    "base_catch": 0.34
+  }
+]

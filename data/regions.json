@@ -1,0 +1,42 @@
+[
+  {
+    "id": "meadow",
+    "display": "\ud83c\udf3e Sunmeadow",
+    "flavor": "Sunmeadow rolls like a green ocean. Wind bends the tall grass around hidden paths.",
+    "available_creatures": [
+      "Moss Bunny"
+    ]
+  },
+  {
+    "id": "ruins",
+    "display": "\ud83c\udfdb\ufe0f Old Ruins",
+    "flavor": "Old Ruins stand half-buried in moss. Echoes make every step feel like a story returning.",
+    "available_creatures": [
+      "Spark Finch"
+    ]
+  },
+  {
+    "id": "river",
+    "display": "\ud83c\udfde\ufe0f Silver River",
+    "flavor": "Silver River glitters under shifting light. Smooth stones mark safe crossings for careful Keepers.",
+    "available_creatures": [
+      "Pebble Otter"
+    ]
+  },
+  {
+    "id": "canyon",
+    "display": "\ud83e\udea8 Storm Canyon",
+    "flavor": "Storm Canyon rumbles with distant thunder. Loose gravel punishes rushed movement.",
+    "available_creatures": [
+      "Iron Tusk"
+    ]
+  },
+  {
+    "id": "forest",
+    "display": "\ud83c\udf32 Moonwood",
+    "flavor": "Moonwood is cool and shadowed. Quiet observation reveals life before noise ever will.",
+    "available_creatures": [
+      "Moonclaw Lynx"
+    ]
+  }
+]

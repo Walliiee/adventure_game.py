@@ -1,0 +1,60 @@
+[
+  {
+    "name": "Mira",
+    "display": "\ud83d\udc69\u200d\ud83c\udf3e Ranger Mira  - animal tracker and care expert",
+    "scenes_by_region": {
+      "meadow": [
+        "Mira kneels by bent grass: 'Tracks fork here. Watch the small signs before you throw an orb.'",
+        "Ari grins: 'Easy terrain. Show me clean fundamentals, not luck.'"
+      ],
+      "ruins": [
+        "Sol taps a cracked pillar: 'Stone reflects sound. Quiet steps matter more here.'",
+        "Mira whispers: 'If birds go silent, pause. Something bigger is nearby.'"
+      ],
+      "river": [
+        "Mira points at fresh prints by the bank: 'Water tells stories. Read them before moving.'",
+        "Sol checks your orb latch: 'Humidity can jam mechanisms. Keep your gear dry.'"
+      ],
+      "forest": [
+        "Mira lowers her voice: 'Moonwood rewards patience. Let the creatures choose to reveal themselves.'",
+        "Ari folds his arms: 'No shortcuts in deep cover. Earn every encounter.'"
+      ]
+    }
+  },
+  {
+    "name": "Sol",
+    "display": "\ud83d\udee0\ufe0f Mechanic Sol   - builds stronger capture orbs",
+    "scenes_by_region": {
+      "ruins": [
+        "Sol taps a cracked pillar: 'Stone reflects sound. Quiet steps matter more here.'",
+        "Mira whispers: 'If birds go silent, pause. Something bigger is nearby.'"
+      ],
+      "river": [
+        "Mira points at fresh prints by the bank: 'Water tells stories. Read them before moving.'",
+        "Sol checks your orb latch: 'Humidity can jam mechanisms. Keep your gear dry.'"
+      ],
+      "canyon": [
+        "Ari calls from above: 'Control your footing. One bad sprint and you lose the approach.'",
+        "Sol studies the cliff walls: 'Echoes can spook creatures. Time your movements between gusts.'"
+      ]
+    }
+  },
+  {
+    "name": "Ari",
+    "display": "\ud83e\udde2 Rival Ari      - bold challenger who pushes your growth",
+    "scenes_by_region": {
+      "meadow": [
+        "Mira kneels by bent grass: 'Tracks fork here. Watch the small signs before you throw an orb.'",
+        "Ari grins: 'Easy terrain. Show me clean fundamentals, not luck.'"
+      ],
+      "canyon": [
+        "Ari calls from above: 'Control your footing. One bad sprint and you lose the approach.'",
+        "Sol studies the cliff walls: 'Echoes can spook creatures. Time your movements between gusts.'"
+      ],
+      "forest": [
+        "Mira lowers her voice: 'Moonwood rewards patience. Let the creatures choose to reveal themselves.'",
+        "Ari folds his arms: 'No shortcuts in deep cover. Earn every encounter.'"
+      ]
+    }
+  }
+]
