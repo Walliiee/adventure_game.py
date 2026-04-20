@@ -2,6 +2,8 @@
 Act 1 training loop: choose source + skill, answer questions, choose focus,
 advance time, and transition to Act 2 readiness.
 """
+from __future__ import annotations
+
 from game.act1.state import (
     create_act1_state,
     all_at_baseline,

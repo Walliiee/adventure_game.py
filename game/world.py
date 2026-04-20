@@ -1,6 +1,8 @@
 """
 World and spawning: regions, creature discovery, and light narrative beats.
 """
+from __future__ import annotations
+
 import random
 from copy import deepcopy
 

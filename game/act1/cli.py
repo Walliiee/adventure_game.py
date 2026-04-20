@@ -1,6 +1,8 @@
 """
 Act 1 CLI: prompts for name, learning source, skill choice, questions, focus.
 """
+from __future__ import annotations
+
 from game.act1.constants import (
     SKILLS,
     BASELINE,
