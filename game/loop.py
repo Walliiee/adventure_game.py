@@ -5,6 +5,25 @@ from game.cli import display_intro, print_stats, day_menu
 from game.world import choose_region, find_creature, describe_region, get_npc_scene
 from game.capture import attempt_capture
 from game.companions import train_companion, play_with_companion, run_exhibition
+from game.save import save_game, load_game, has_save
+
+
+def start_game(fresh_state_factory) -> dict:
+    """Handle save loading at game start, or create a fresh state."""
+    if has_save():
+        response = input("Continue your adventure? [y/n]: ").strip().lower()
+        if response in {"y", "yes"}:
+            state = load_game()
+            if state is not None:
+                print(f"Welcome back, {state['name']}! Loading save on Day {state['turn']}...")
+                return state
+            else:
+                print("Save file corrupted. Starting a fresh adventure.")
+        elif response in {"n", "no"}:
+            print("Starting a new adventure!")
+        else:
+            print("Starting a new adventure!")
+    return fresh_state_factory()
 
 
 def run_session(state: dict) -> None:
@@ -40,13 +59,20 @@ def run_session(state: dict) -> None:
         elif choice == 4:
             won, action_performed = run_exhibition(state)
             if won:
+                save_game(state)
                 return
+        elif choice == 5:
+            save_game(state)
+            print("Game saved.")
+            continue
         else:
             print("You pack your gear and leave Ridgecamp. Adventure paused.")
+            save_game(state)
             return
 
         if action_performed:
             state["turn"] += 1
+            save_game(state)
         if state["health"] <= 0:
             print("\nYou collapse from exhaustion. Your companions guard you until help arrives.")
             return
