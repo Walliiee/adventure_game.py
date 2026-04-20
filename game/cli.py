@@ -86,18 +86,21 @@ DAY_MENU_OPTIONS = [
     "Train a companion",
     "Play with a companion",
     "Use companion ability (once per day)",
+    "Visit Ridgecamp NPCs",
     "View stats",
     "Start exhibition match",
     "Save game",
     "Quit adventure",
 ]
 DAY_MENU_ALIASES = {
-    "explore": 0, "train": 1, "play": 2, "ability": 3, "stats": 4, "match": 5, "save": 6, "quit": 7, "q": 7, "i": -1, "use": -2,
+    "explore": 0, "train": 1, "play": 2, "ability": 3, "npc": 4, "npcs": 4,
+    "visit": 4, "stats": 5, "match": 6, "save": 7, "quit": 8, "q": 8,
+    "i": -1, "use": -2,
 }
 
 
 def day_menu(state: dict) -> int:
-    """Show camp action menu; return 0–7 (explore, train, play, ability, stats, match, save, quit)."""
+    """Show camp action menu; return 0–8."""
     return get_player_choice(
         DAY_MENU_OPTIONS, DAY_MENU_ALIASES, prompt="Choose your camp action: "
     )

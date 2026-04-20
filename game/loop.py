@@ -18,6 +18,7 @@ from game.endings import show_ending
 from game.achievements import check_achievements, show_achievement
 from game.inventory import show_inventory, use_item, find_item_on_explore
 from game.encounters import roll_encounter, handle_encounter
+from game.npc import npc_menu, interact_with_npc
 
 
 def _check_and_show_achievements(state: dict) -> None:
@@ -124,20 +125,23 @@ def run_session(state: dict) -> None:
             # Use companion ability
             action_performed = _companion_ability_menu(state)
         elif choice == 4:
-            print_stats(state)
+            # Visit NPCs
+            action_performed = npc_menu(state)
         elif choice == 5:
+            print_stats(state)
+        elif choice == 6:
             won, action_performed = run_exhibition(state)
             if won:
                 _check_and_show_achievements(state)
                 show_ending(state)
                 save_game(state)
                 return
-        elif choice == 6:
+        elif choice == 7:
             save_game(state)
             print("Game saved.")
             continue
         else:
-            # choice == 7 (quit) or unrecognized — save and return to main
+            # choice == 8 (quit) or unrecognized — save and return to main
             print("You pack your gear and leave Ridgecamp. Adventure paused.")
             save_game(state)
             return

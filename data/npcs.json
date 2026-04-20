@@ -1,59 +1,79 @@
 [
   {
+    "name": "Eldra",
+    "display": "🔮 Eldra the Keeper - wise mentor who knows the land",
+    "role": "keeper",
+    "dialogue": {
+      "greeting": "Welcome back, Keeper. The land speaks to those who listen.",
+      "daily_tip": "You seem to favor {preferred_region}. Try exploring {suggested_region} next for new discoveries."
+    },
+    "scenes_by_region": {
+      "meadow": [
+        "Eldra watches the horizon: 'The meadows bloom for those with patience.'",
+        "Eldra nods approvingly: 'Every journey begins with a single step.'"
+      ],
+      "ruins": [
+        "Eldra traces ancient symbols: 'The past holds lessons for the present.'",
+        "Eldra pauses thoughtfully: 'Some doors open only to those who knock twice.'"
+      ],
+      "river": [
+        "Eldra listens to the water: 'Flow like the river — adapt and persist.'",
+        "Eldra smiles: 'The current carries both leaves and lessons.'"
+      ],
+      "canyon": [
+        "Eldra studies the rock faces: 'Storms shape the canyon, not break it.'",
+        "Eldra warns gently: 'The heights demand respect, not fear.'"
+      ],
+      "forest": [
+        "Eldra breathes deep the moonwood air: 'In shadow, we find our inner light.'",
+        "Eldra whispers: 'The forest remembers every footstep.'"
+      ]
+    }
+  },
+  {
+    "name": "Torv",
+    "display": "🛒 Merchant Torv - trader of useful goods",
+    "role": "merchant",
+    "dialogue": {
+      "greeting": "Got coin? Got goods! What can Torv do for you today?",
+      "farewell": "Come back when you've got more coin! Torv always has the best prices!"
+    },
+    "shop": {
+      "healing_herb": {"name": "Healing Herb", "price": 2, "description": "Restores health when used"},
+      "capture_charm": {"name": "Capture Charm", "price": 5, "description": "Increases capture success rate"}
+    },
+    "scenes_by_region": {
+      "river": [
+        "Torv polishes his wares: 'Fresh stock from upstream traders!'",
+        "Torv counts his coins: 'A good day for business, eh?'"
+      ],
+      "meadow": [
+        "Torv sets up his stall: "Sunmeadow market day! Best prices in the region!",
+        "Torv waves you over: "New arrivals just in from the highlands!"
+      ]
+    }
+  },
+  {
     "name": "Mira",
-    "display": "\ud83d\udc69\u200d\ud83c\udf3e Ranger Mira  - animal tracker and care expert",
+    "display": "🧭 Scout Mira - tracks rare creatures across the wildlands",
+    "role": "scout",
+    "dialogue": {
+      "greeting": "*adjusts spyglass* Spotted anything interesting today?",
+      "rare_creature": "Psst — word is there's a rare creature lurking in the {region} today.",
+      "farewell": "Happy hunting! Keep your eyes sharp and your orbs ready."
+    },
     "scenes_by_region": {
-      "meadow": [
-        "Mira kneels by bent grass: 'Tracks fork here. Watch the small signs before you throw an orb.'",
-        "Ari grins: 'Easy terrain. Show me clean fundamentals, not luck.'"
-      ],
-      "ruins": [
-        "Sol taps a cracked pillar: 'Stone reflects sound. Quiet steps matter more here.'",
-        "Mira whispers: 'If birds go silent, pause. Something bigger is nearby.'"
-      ],
-      "river": [
-        "Mira points at fresh prints by the bank: 'Water tells stories. Read them before moving.'",
-        "Sol checks your orb latch: 'Humidity can jam mechanisms. Keep your gear dry.'"
-      ],
       "forest": [
-        "Mira lowers her voice: 'Moonwood rewards patience. Let the creatures choose to reveal themselves.'",
-        "Ari folds his arms: 'No shortcuts in deep cover. Earn every encounter.'"
-      ]
-    }
-  },
-  {
-    "name": "Sol",
-    "display": "\ud83d\udee0\ufe0f Mechanic Sol   - builds stronger capture orbs",
-    "scenes_by_region": {
-      "ruins": [
-        "Sol taps a cracked pillar: 'Stone reflects sound. Quiet steps matter more here.'",
-        "Mira whispers: 'If birds go silent, pause. Something bigger is nearby.'"
-      ],
-      "river": [
-        "Mira points at fresh prints by the bank: 'Water tells stories. Read them before moving.'",
-        "Sol checks your orb latch: 'Humidity can jam mechanisms. Keep your gear dry.'"
+        "Mira peers through the canopy: 'Something big moved through here recently.'",
+        "Mira marks her map: 'Moonwood always has secrets to reveal.'"
       ],
       "canyon": [
-        "Ari calls from above: 'Control your footing. One bad sprint and you lose the approach.'",
-        "Sol studies the cliff walls: 'Echoes can spook creatures. Time your movements between gusts.'"
-      ]
-    }
-  },
-  {
-    "name": "Ari",
-    "display": "\ud83e\udde2 Rival Ari      - bold challenger who pushes your growth",
-    "scenes_by_region": {
-      "meadow": [
-        "Mira kneels by bent grass: 'Tracks fork here. Watch the small signs before you throw an orb.'",
-        "Ari grins: 'Easy terrain. Show me clean fundamentals, not luck.'"
+        "Mira shades her eyes: 'Tracks lead toward the storm breaks.'",
+        "Mira crouches low: 'The canyon creatures are wary today.'"
       ],
-      "canyon": [
-        "Ari calls from above: 'Control your footing. One bad sprint and you lose the approach.'",
-        "Sol studies the cliff walls: 'Echoes can spook creatures. Time your movements between gusts.'"
-      ],
-      "forest": [
-        "Mira lowers her voice: 'Moonwood rewards patience. Let the creatures choose to reveal themselves.'",
-        "Ari folds his arms: 'No shortcuts in deep cover. Earn every encounter.'"
+      "highlands": [
+        "Mira scans the peaks: 'The highlands call to the proud creatures.'",
+        "Mira points upward: 'Thunder Yaks roam where the air is thin.'"
       ]
     }
   }

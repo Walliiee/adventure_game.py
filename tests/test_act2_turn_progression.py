@@ -7,21 +7,21 @@ from game.state import create_game_state
 
 class TestAct2TurnProgression(unittest.TestCase):
     @patch("game.loop.display_intro")
-    @patch("game.loop.day_menu", side_effect=[1, 4, 7])  # train -> stats -> quit
+    @patch("game.loop.day_menu", side_effect=[1, 5, 8])  # train -> stats -> quit
     def test_train_without_companion_does_not_advance_day(self, _menu, _intro):
         state = create_game_state("Test", "story")
         run_session(state)
         self.assertEqual(state["turn"], 1)
 
     @patch("game.loop.display_intro")
-    @patch("game.loop.day_menu", side_effect=[5, 4, 7])  # exhibition -> stats -> quit
+    @patch("game.loop.day_menu", side_effect=[6, 5, 8])  # exhibition -> stats -> quit
     def test_exhibition_not_ready_does_not_advance_day(self, _menu, _intro):
         state = create_game_state("Test", "story")
         run_session(state)
         self.assertEqual(state["turn"], 1)
 
     @patch("game.loop.display_intro")
-    @patch("game.loop.day_menu", side_effect=[1, 7])  # train -> quit
+    @patch("game.loop.day_menu", side_effect=[1, 8])  # train -> quit
     @patch("game.companions.get_player_choice", return_value=0)
     def test_train_with_companion_advances_day(self, _pick, _menu, _intro):
         state = create_game_state("Test", "story")
