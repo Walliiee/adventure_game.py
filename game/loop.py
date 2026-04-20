@@ -4,10 +4,10 @@ Main game loop: one session from intro until win, quit, or game over.
 from game.cli import display_intro, print_stats, day_menu
 from game.world import choose_region, find_creature, describe_region, get_npc_scene
 from game.capture import attempt_capture
+from game.exhibition import run_exhibition
 from game.companions import (
     train_companion, 
     play_with_companion, 
-    run_exhibition,
     pick_companion,
     use_companion_ability,
     reset_daily_abilities,
