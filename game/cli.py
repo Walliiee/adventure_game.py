@@ -69,11 +69,14 @@ def display_intro(state: dict) -> None:
 def print_stats(state: dict) -> None:
     mini = state["balls"]["mini"]
     mega = state["balls"]["mega"]
-    _safe_print(f"\n[Day {state['turn']}] Health: {state['health']} | Mini Orbs: {mini} | Mega Orbs: {mega}")
+    coins = state.get("coins", 0)
+    _safe_print(f"\n[Day {state['turn']}] Health: {state['health']} | Mini Orbs: {mini} | Mega Orbs: {mega} | Coins: {coins}")
     if state["captured"]:
         _safe_print("Companions:")
         for pet in state["captured"]:
-            _safe_print(f" - {pet['name']} ({pet['size']}) Lv.{pet['level']} Bond:{pet['bond']} Mood:{pet['mood']}")
+            personality = pet.get("personality", "brave")
+            ability_status = "✓" if not pet.get("ability_used_today", False) else "✗"
+            _safe_print(f" - {pet['name']} ({pet['size']}, {personality}) Lv.{pet['level']} Bond:{pet['bond']} Mood:{pet['mood']} [Ability:{ability_status}]")
     else:
         _safe_print("Companions: none yet")
 
@@ -82,18 +85,19 @@ DAY_MENU_OPTIONS = [
     "Explore wild region and attempt a capture",
     "Train a companion",
     "Play with a companion",
+    "Use companion ability (once per day)",
     "View stats",
     "Start exhibition match",
     "Save game",
     "Quit adventure",
 ]
 DAY_MENU_ALIASES = {
-    "explore": 0, "train": 1, "play": 2, "stats": 3, "match": 4, "save": 5, "quit": 6, "q": 6, "i": -1, "use": -2,
+    "explore": 0, "train": 1, "play": 2, "ability": 3, "stats": 4, "match": 5, "save": 6, "quit": 7, "q": 7, "i": -1, "use": -2,
 }
 
 
 def day_menu(state: dict) -> int:
-    """Show camp action menu; return 0–6 (explore, train, play, stats, match, save, quit)."""
+    """Show camp action menu; return 0–7 (explore, train, play, ability, stats, match, save, quit)."""
     return get_player_choice(
         DAY_MENU_OPTIONS, DAY_MENU_ALIASES, prompt="Choose your camp action: "
     )

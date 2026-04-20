@@ -4,41 +4,47 @@
     "size": "small",
     "habitat": "meadow",
     "temperament": "gentle",
-    "base_catch": 0.78
+    "base_catch": 0.78,
+    "personality": "timid"
   },
   {
     "name": "Spark Finch",
     "size": "small",
     "habitat": "ruins",
     "temperament": "curious",
-    "base_catch": 0.74
+    "base_catch": 0.74,
+    "personality": "brave"
   },
   {
     "name": "Pebble Otter",
     "size": "small",
     "habitat": "river",
     "temperament": "playful",
-    "base_catch": 0.72
+    "base_catch": 0.72,
+    "personality": "playful"
   },
   {
     "name": "Iron Tusk",
     "size": "big",
     "habitat": "canyon",
     "temperament": "stubborn",
-    "base_catch": 0.4
+    "base_catch": 0.4,
+    "personality": "brave"
   },
   {
     "name": "Thunder Yak",
     "size": "big",
     "habitat": "highlands",
     "temperament": "proud",
-    "base_catch": 0.36
+    "base_catch": 0.36,
+    "personality": "timid"
   },
   {
     "name": "Moonclaw Lynx",
     "size": "big",
     "habitat": "forest",
     "temperament": "fierce",
-    "base_catch": 0.34
+    "base_catch": 0.34,
+    "personality": "playful"
   }
 ]

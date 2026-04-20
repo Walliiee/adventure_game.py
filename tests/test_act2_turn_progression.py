@@ -7,26 +7,26 @@ from game.state import create_game_state
 
 class TestAct2TurnProgression(unittest.TestCase):
     @patch("game.loop.display_intro")
-    @patch("game.loop.day_menu", side_effect=[1, 3, 6])  # train -> stats -> quit
+    @patch("game.loop.day_menu", side_effect=[1, 4, 7])  # train -> stats -> quit
     def test_train_without_companion_does_not_advance_day(self, _menu, _intro):
         state = create_game_state("Test", "story")
         run_session(state)
         self.assertEqual(state["turn"], 1)
 
     @patch("game.loop.display_intro")
-    @patch("game.loop.day_menu", side_effect=[4, 3, 6])  # exhibition -> stats -> quit
+    @patch("game.loop.day_menu", side_effect=[5, 4, 7])  # exhibition -> stats -> quit
     def test_exhibition_not_ready_does_not_advance_day(self, _menu, _intro):
         state = create_game_state("Test", "story")
         run_session(state)
         self.assertEqual(state["turn"], 1)
 
     @patch("game.loop.display_intro")
-    @patch("game.loop.day_menu", side_effect=[1, 6])  # train -> quit
+    @patch("game.loop.day_menu", side_effect=[1, 7])  # train -> quit
     @patch("game.companions.get_player_choice", return_value=0)
     def test_train_with_companion_advances_day(self, _pick, _menu, _intro):
         state = create_game_state("Test", "story")
         state["captured"].append(
-            {"name": "Moss Bunny", "size": "small", "level": 1, "bond": 1, "mood": "curious"}
+            {"name": "Moss Bunny", "size": "small", "level": 1, "bond": 1, "mood": "curious", "personality": "timid", "ability_used_today": False}
         )
         run_session(state)
         self.assertEqual(state["turn"], 2)

@@ -18,6 +18,8 @@ class Companion(TypedDict):
     level: int
     bond: int
     mood: str
+    personality: str
+    ability_used_today: bool
 
 
 class GameState(TypedDict):
@@ -40,6 +42,9 @@ class GameState(TypedDict):
     primary_skill: str | None
     supplementary_skills: list[str]
     inventory: dict[str, int]
+    # Companion abilities and economy
+    coins: int
+    companion_energized: bool
 
 
 def create_game_state(player_name: str, difficulty: str) -> GameState:
@@ -60,7 +65,11 @@ def create_game_state(player_name: str, difficulty: str) -> GameState:
         "exhibition_perfect_win": False,
         "exhibition_won": False,
         "achievements_unlocked": [],
+        # Act 1 skill choices carried into Act 2
         "primary_skill": None,
         "supplementary_skills": [],
         "inventory": {"healing_herb": 2, "capture_charm": 1},
+        # Companion abilities and economy
+        "coins": 10,
+        "companion_energized": False,
     }

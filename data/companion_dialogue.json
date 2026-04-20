@@ -1,0 +1,161 @@
+{
+  "brave": {
+    "low": {
+      "motivated": [
+        "I'm still finding my footing, but I'm ready to try!",
+        "I might be new, but I'm not backing down.",
+        "Together, we'll become stronger. I believe that."
+      ],
+      "happy": [
+        "A good start! I feel like we could take on anything.",
+        "Training with you makes me feel brave already!",
+        "This is fun! I can't wait to see what we accomplish."
+      ],
+      "tired": [
+        "Even heroes need rest... but I'll be back stronger.",
+        "A brief pause, then we push forward again.",
+        "Rest now, conquer later. That's the brave way."
+      ]
+    },
+    "mid": {
+      "motivated": [
+        "Our bond grows stronger! Let's seize the day!",
+        "I can feel our teamwork improving. Onward!",
+        "No challenge is too great for us now."
+      ],
+      "happy": [
+        "Haha! I knew partnering with you was the right choice!",
+        "We're quite the team, aren't we?",
+        "Joy and courage — a winning combination!"
+      ],
+      "tired": [
+        "A warrior rests to fight another day.",
+        "Even the bravest need a moment to breathe.",
+        "Recharge now, and we'll be unstoppable tomorrow."
+      ]
+    },
+    "high": {
+      "motivated": [
+        "I would follow you into any danger! Let's go!",
+        "Our bond is unbreakable! Nothing can stop us!",
+        "Champions aren't born — they're forged together!"
+      ],
+      "happy": [
+        "This is what victory feels like! Pure joy!",
+        "I couldn't be prouder to be your companion!",
+        "We've come so far — and we're not done yet!"
+      ],
+      "tired": [
+        "Even legends need their rest. Tomorrow, we soar!",
+        "A brief respite for champions. Then back to glory!",
+        "Rest is just preparation for our next triumph."
+      ]
+    }
+  },
+  "timid": {
+    "low": {
+      "motivated": [
+        "I-I'm trying my best... even if I'm scared...",
+        "Being brave is hard, but I'll do my best for you.",
+        "I might be small, but I care about you..."
+      ],
+      "happy": [
+        "You make me feel... a little less afraid.",
+        "I-I'm glad we're spending time together...",
+        "This feels nice. Safe. Thank you..."
+      ],
+      "tired": [
+        "I need to rest... but I'll stay close by...",
+        "*yawns* Sorry, I'm just... a bit overwhelmed...",
+        "Rest helps me feel braver. Just a little while..."
+      ]
+    },
+    "mid": {
+      "motivated": [
+        "I'm still nervous, but... I trust you more now.",
+        "Maybe I can be brave, with you beside me...",
+        "Small steps forward, right? I can do that..."
+      ],
+      "happy": [
+        "You're so kind to me... I feel safer now.",
+        "I never thought I'd feel this comfortable with anyone...",
+        "*soft smile* You make the scary things feel smaller..."
+      ],
+      "tired": [
+        "Just... need a moment to gather my courage again...",
+        "Being brave takes energy. Can we pause a bit?",
+        "A rest, and then I'll try to be strong again..."
+      ]
+    },
+    "high": {
+      "motivated": [
+        "I-I've never felt this brave before! It's because of you!",
+        "You taught me that courage isn't about not being afraid...",
+        "I'll stand by your side, even when my heart races!"
+      ],
+      "happy": [
+        "*beaming* I never knew I could feel this happy!",
+        "You're my safe place. Thank you for being patient with me...",
+        "I used to hide from everything. Now I look forward to each day!"
+      ],
+      "tired": [
+        "Even the brave need rest... and I'm learning to be brave...",
+        "*yawns* Resting with you is my favorite thing...",
+        "Tomorrow, I'll be strong again. For both of us."
+      ]
+    }
+  },
+  "playful": {
+    "low": {
+      "motivated": [
+        "Ooh, training? Is it time to play yet?",
+        "Let's run around! Let's do something fun!",
+        "I'm excited! What are we doing today?"
+      ],
+      "happy": [
+        "Wheee! This is the best!",
+        "Tag! You're it! *giggles*",
+        "I could play with you forever!"
+      ],
+      "tired": [
+        "*yawns* Just five more minutes of play? Pleeease?",
+        "Aww, nap time? But I was having so much fun!",
+        "*curls up* Okay, rest time... but dream of adventures!"
+      ]
+    },
+    "mid": {
+      "motivated": [
+        "I love training! It feels like a game!",
+        "What's next? Can we do something exciting?",
+        "Ready for action! Let's make it fun!"
+      ],
+      "happy": [
+        "You're the best playmate ever!",
+        "*spins in circles* This is amazing!",
+        "Every day with you is an adventure!"
+      ],
+      "tired": [
+        "*pants happily* That was so much fun...",
+        "One more game? No? Okay, rest time it is!",
+        "Dreaming of all the fun we'll have tomorrow!"
+      ]
+    },
+    "high": {
+      "motivated": [
+        "Let's GO! I've got more energy than ever!",
+        "Adventure time! Training time! Play time! ALL THE TIME!",
+        "We're unstoppable! Unbeatable! Unbelievably awesome!"
+      ],
+      "happy": [
+        "This is PERFECT! You and me, best team ever!",
+        "*joyful zoomies* Life is one big playground!",
+        "I never want this feeling to end! Wheee!"
+      ],
+      "tired": [
+        "*collapses happily* Played... so... hard...",
+        "Best. Day. Ever. *snores contentedly*",
+        "Resting is just recharging for more fun!"
+      ]
+    }
+  }
+}

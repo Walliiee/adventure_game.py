@@ -4,7 +4,15 @@ Main game loop: one session from intro until win, quit, or game over.
 from game.cli import display_intro, print_stats, day_menu
 from game.world import choose_region, find_creature, describe_region, get_npc_scene
 from game.capture import attempt_capture
-from game.companions import train_companion, play_with_companion, run_exhibition
+from game.companions import (
+    train_companion, 
+    play_with_companion, 
+    run_exhibition,
+    pick_companion,
+    use_companion_ability,
+    reset_daily_abilities,
+    get_brave_capture_bonus,
+)
 from game.save import save_game, load_game, has_save
 from game.endings import show_ending
 from game.achievements import check_achievements, show_achievement
@@ -45,6 +53,21 @@ def _inventory_menu(state: dict) -> None:
             print("Invalid choice.")
     except ValueError:
         print("Invalid input.")
+
+
+def _companion_ability_menu(state: dict) -> bool:
+    """Let player use a companion's daily ability. Returns True if action performed."""
+    if not state["captured"]:
+        print("You need a companion to use an ability.")
+        return False
+    
+    companion = pick_companion(state, "use ability")
+    if not companion:
+        return False
+    
+    result = use_companion_ability(state, companion)
+    print(result)
+    return True
 
 
 def run_session(state: dict) -> None:
@@ -98,26 +121,33 @@ def run_session(state: dict) -> None:
         elif choice == 2:
             action_performed = play_with_companion(state)
         elif choice == 3:
-            print_stats(state)
+            # Use companion ability
+            action_performed = _companion_ability_menu(state)
         elif choice == 4:
+            print_stats(state)
+        elif choice == 5:
             won, action_performed = run_exhibition(state)
             if won:
                 _check_and_show_achievements(state)
                 show_ending(state)
                 save_game(state)
                 return
-        elif choice == 5:
+        elif choice == 6:
             save_game(state)
             print("Game saved.")
             continue
         else:
-            # choice == 6 (quit) or unrecognized — save and return to main
+            # choice == 7 (quit) or unrecognized — save and return to main
             print("You pack your gear and leave Ridgecamp. Adventure paused.")
             save_game(state)
             return
 
         if action_performed:
+            # Reset daily abilities when a new day starts (turn increments)
+            old_turn = state["turn"]
             state["turn"] += 1
+            if state["turn"] > old_turn:
+                reset_daily_abilities(state)
             _check_and_show_achievements(state)
             save_game(state)
         if state["health"] <= 0:

@@ -7,7 +7,7 @@ class TestCliSmoke(unittest.TestCase):
     def test_test_mode_quit_path(self):
         proc = subprocess.run(
             [sys.executable, "adventure_game.py", "--test"],
-            input="7\nn\n",
+            input="8\nn\n",
             text=True,
             capture_output=True,
             check=False,
