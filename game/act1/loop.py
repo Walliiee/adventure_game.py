@@ -14,6 +14,12 @@ from game.act1.questions import choose_question
 from game.act1 import cli as act1_cli
 
 
+_last_state = None
+
+def _last_act1_state():
+    """Return the last Act1State from a completed run, for passing skills to Act 2."""
+    return _last_state
+
 def year_completion_message(actions: int) -> str | None:
     """Return year completion banner text when a training year is finished."""
     if actions <= 0 or actions % ACTIONS_PER_YEAR != 0:
@@ -79,5 +85,7 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
         state["actions"] += 1
 
         if is_ready(state):
+            global _last_state
+            _last_state = state
             act1_cli.print_ready_message(state)
             return True, name

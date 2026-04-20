@@ -10,6 +10,7 @@ from game.constants import (
     NPC_NAMES,
 )
 from game.cli import get_player_choice
+from game.skills import get_skill_bonus, CATCH_RATE, UNLIMITED_BALLS
 
 
 def attempt_capture(state: dict, creature: dict) -> None:
@@ -32,9 +33,20 @@ def attempt_capture(state: dict, creature: dict) -> None:
         return
 
     chosen = ball_type if pick == 0 else alt_ball
+    # Act 1 skill: Strength primary = unlimited balls; supplementary = 50% refund chance
     if state["balls"][chosen] <= 0:
-        print(f"No {chosen.title()} Orbs left! The creature escapes.")
-        return
+        unlimited_bonus = get_skill_bonus(state, UNLIMITED_BALLS)
+        if unlimited_bonus >= 1.0:
+            # Primary Strength: balls never run out — give a free one
+            state["balls"][chosen] += 1
+            print(f"💪 Your Strength training kicks in — you find an extra {chosen.title()} Orb!")
+        elif unlimited_bonus > 0 and random.random() < unlimited_bonus:
+            # Supplementary Strength: 50% chance to find an extra ball
+            state["balls"][chosen] += 1
+            print(f"💪 Your Strength training helps — you scrape together one more {chosen.title()} Orb!")
+        else:
+            print(f"No {chosen.title()} Orbs left! The creature escapes.")
+            return
 
     state["balls"][chosen] -= 1
     chance = creature["base_catch"]
@@ -44,6 +56,10 @@ def attempt_capture(state: dict, creature: dict) -> None:
         chance += CAPTURE_STORY_BONUS
     elif state["difficulty"] == "hardcore":
         chance -= CAPTURE_HARDCORE_PENALTY
+
+    # Act 1 skill bonus: Smarts (tracking) boosts catch rate in forest/meadow
+    region = state.get("current_region", "")
+    chance += get_skill_bonus(state, CATCH_RATE, region=region)
 
     roll = random.random()
     if roll <= chance:

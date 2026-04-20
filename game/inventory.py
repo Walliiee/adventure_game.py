@@ -7,6 +7,7 @@ import random
 from copy import deepcopy
 
 from game.constants import CREATURES
+from game.skills import get_skill_bonus, HERB_HEAL
 
 # -----------------------------------------------------------------------------
 # Item definitions

@@ -7,6 +7,7 @@ import random
 from copy import deepcopy
 
 from game.constants import CREATURES
+from game.skills import get_skill_bonus, STORM_DAMAGE, WILD_SIGHTING
 
 
 # (encounter_type, weight)
@@ -32,6 +33,14 @@ def _weighted_encounter() -> str:
 
 def roll_encounter(state: dict) -> str | None:
     """Decide if a random encounter fires when moving to a new region. Returns type or None."""
+    # Act 1 skill bonus: Agility/Stealth makes wild creature sightings always trigger
+    sight_bonus = get_skill_bonus(state, WILD_SIGHTING)
+    if sight_bonus >= 1.0:
+        return "wild_creature"
+    elif sight_bonus > 0:
+        # Supplementary: boost wild_creature weight significantly
+        if random.random() < sight_bonus:
+            return "wild_creature"
     return _weighted_encounter()
 
 
