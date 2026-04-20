@@ -1,94 +1,106 @@
 # Wildlands: Orb Catcher Adventure
 
-A creature-catching CLI game and a kid-friendly web adventure. The codebase is organized as a proper game project: core logic in a `game/` package, content in config, and a clear entry point.
+**A creature-catching CLI adventure** — train your skills, catch wild creatures, build your team, and earn your place as a Keeper.
 
-## Project structure
+[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+
+---
+
+## Quick Demo
 
 ```
-├── game/                 # Main game package
-│   ├── __init__.py
-│   ├── __main__.py       # Entry: python -m game
-│   ├── constants.py      # Creatures, difficulty, regions, NPCs
-│   ├── state.py          # Game state creation
-│   ├── world.py          # Regions, creature spawning
-│   ├── capture.py        # Capture mechanic
-│   ├── companions.py     # Train, play, exhibition
-│   ├── cli.py            # Menus, prompts, display
-│   ├── loop.py           # Main game loop
-│   └── main.py           # Entry: setup + replay
-├── web/                  # Forest Adventure + Act 1 Training UI (static)
-├── examples/             # Standalone scripts (demos, exercises)
-├── adventure_game.py     # Launcher (run from repo root)
-├── requirements.txt
-└── GAME_IMPROVEMENT_IDEAS.md
+$ python adventure_game.py
+
+  ╔═══════════════════════════════════════╗
+  ║   WILDLANDS: ORB CATCHER ADVENTURE    ║
+  ╚═══════════════════════════════════════╝
+
+  What's your name, young Trainer? █
 ```
 
-## How to run
+---
 
-**CLI game (Wildlands) — full journey (Act 1 then Act 2):**
+## Features
+
+- **Two-act structure** — grow your character (Act 1: ages 7–10 with skill training) then enter the Wildlands (Act 2: capture loop).
+- **Persistent save/load** — game auto-saves on exit; save slots accessible from the camp menu.
+- **6 distinct endings** — determined by difficulty, creature bonds, and narrative choices.
+- **8 achievements** — unlock milestones for captures, exhibitions, companions, and exploration.
+- **4-slot inventory** — equip rare items that modify encounters or capture odds.
+- **5 random encounter types** — weather, creature sightings, travelers, NPC events, and treasure.
+- **Skill transfer** — abilities trained in Act 1 carry forward as modifiers in Act 2.
+- **Companion system** — three unique companions (Emberfang, Shadowmite, Stormcrest) with daily abilities.
+- **NPC shop + coin economy** — earn coins by catching creatures and winning exhibitions; spend them at the camp shop.
+- **JSON-driven content** — creatures, regions, NPCs, and encounters defined in `data/` for easy editing.
+- **No dependencies** — pure Python 3.9+ standard library; runs anywhere.
+
+---
+
+## How to Play
+
+### Install
+
 ```bash
+# No installation needed — just clone and run
+git clone https://github.com/Walliiee/adventure_game.py.git
+cd adventure_game.py
+```
+
+### Run
+
+```bash
+# Full game (Act 1 → Act 2)
 python adventure_game.py
-```
-You create your character (name), train from age 7→10 (four skills, questions, choose primary + 2 supplementary), then go to Ridgecamp for the Keeper loop.
 
-**Skip Act 1 (test Act 2 only):**
-```bash
+# Skip Act 1, jump straight to Act 2 (for testing)
 python adventure_game.py --test
 ```
 
-## MVP playtest checklist
+### Controls
 
-Use this quick loop for first-pass playability checks:
+| Action | Input |
+|---|---|
+| Select menu option | Type number (1, 2, 3…) |
+| Confirm / continue | `y` or `enter` |
+| Quit / cancel | `q` |
+| Save game | Choose "Save" from camp menu |
+| Load game | Choose "Load" on the title screen |
 
-1. Run the full path (`python adventure_game.py`), enter a name, and confirm Act 1 starts.
-2. Train until you select primary + supplementary skills, then confirm guidance remains clear.
-3. Reach Ridgecamp (Act 2), choose a difficulty, and perform at least one camp action.
-4. Quit from the camp menu and confirm replay prompt behaves correctly.
-5. Run quick path (`python adventure_game.py --test`) and verify immediate Act 2 access.
+---
 
-**Web (visual):**  
-- **Best:** run a local server so the page loads correctly. From the project root: `cd web && python -m http.server 8080` then open **http://localhost:8080/act1.html** (or index.html, character3d.html).
-- Act 1 Training: `web/act1.html` is **self-contained** (CSS and JS inlined) so it can also be opened directly from the `web/` folder in your browser.
-- Forest Adventure: `web/index.html` · 3D character: `web/character3d.html`. See `docs/VISUAL_INTERFACE.md`.
+## Game Mechanics
 
-## Requirements
+### Act 1 — Training (Ages 7–10)
 
-- **Python 3.10+** (standard library only for the CLI game)
-- Optional deps in `requirements.txt` (e.g. for scripts in `examples/`).
+Answer questions to train four skills — **Speed, Strength, Smarts, Stealth**. At age 10, choose:
+- **1 primary skill** (significant bonus in Act 2)
+- **2 supplementary skills** (moderate bonus)
 
-## Development and quality
+These bonuses carry forward, affecting capture odds, encounter difficulty, and companion performance.
 
-Install optional dev tooling:
+### Act 2 — The Wildlands (Keeper Loop)
 
-```bash
-pip install -e ".[dev]"
-```
+Arrive at **Ridgecamp** and choose a difficulty. Each day you can:
+- **Explore** — travel to regions, encounter wild creatures
+- **Capture** — attempt to catch creatures (capture odds depend on skill bonuses + item bonuses)
+- **Camp** — rest (restores companion ability), save/load, visit NPCs, view achievements
+- **Companion activities** — train for exhibitions, play for mood, enter exhibitions for coin rewards
 
-Run local quality checks:
+### Companions
 
-```bash
-python -m ruff check .
-python -m mypy game/state.py game/act1/state.py
-python -m unittest discover -s tests -p "test_*.py"
-```
+| Name | Personality | Daily Ability |
+|---|---|---|
+| Ember the Emberfang | Enthusiastic & bold | Embolden — next capture has +15% bonus |
+| Zaph the Shadowmite | Laid-back & clever | Scout — guarantees a rare creature in next explore |
+| Lira the Stormcrest | Graceful & cautious | Calm — next random encounter is always positive |
 
-CI runs the same checks on pull requests and pushes.
+---
 
-## Other scripts
+## Contributing
 
-Standalone demos and exercises live in **`examples/`**. Run with `python examples/<script>.py` from the repo root. They are not part of the Wildlands game.
-
-## Project memory (agents and humans)
-
-**`docs/`** is the canonical project memory. It defines development phases, narrative design, and current status. When working on the game (or reviewing it), read `docs/README.md` first, then the other docs there. A Cursor rule instructs agents to read these and suggest improvements aligned with the current phase.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local dev setup, quality checks, and PR process.
 
 ## Roadmap
 
-See **GAME_IMPROVEMENT_IDEAS.md** for idea backlog. Execution order follows **`docs/DEVELOPMENT_PHASES.md`**.
-
-## Contributing and release notes
-
-- Contribution guide: `CONTRIBUTING.md`
-- Architecture overview: `docs/ARCHITECTURE.md`
-- Current version: `VERSION`
-- Change history: `CHANGELOG.md`
+Current ideas and planned features are tracked in [GAME_IMPROVEMENT_IDEAS.md](GAME_IMPROVEMENT_IDEAS.md).
