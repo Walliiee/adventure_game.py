@@ -4,71 +4,30 @@ Here are some fun ways to make `adventure_game.py` more playable while keeping t
 
 ## Quick wins (1–2 hours)
 
-1. **Replay loop**
-   - After a win/lose ending, ask: "Play again? (y/n)" instead of immediately exiting.
-
-2. **Player name + simple stats**
-   - Let players enter a name at the start.
-   - Track `courage`, `luck`, and `health` as simple numbers shown after key choices.
-
-3. **Input quality-of-life**
-   - Accept words (`dark`, `trail`, `tree`) in addition to number choices.
-   - Add commands like `help` (show options again) and `quit`.
-
-4. **Better pacing text**
-   - Add short pauses (`time.sleep`) between major lines for dramatic effect.
-   - Keep this optional via a `FAST_MODE` toggle.
+1. **Replay loop** ✅ *(already implemented — `game/cli.py::ask_replay()` called in main loop)*
+2. **Player name + simple stats** *(partially: name is asked in Act 1 via `ask_act1_name()`; courage/luck/health stats not yet tracked)*
+3. **Input quality-of-life** ✅ *(already implemented — `q`/`quit` exits prompts; word aliases for choices work via `REGION_ALIASES` in `constants.py`; `help` shows options in CLI prompts)*
+4. **Better pacing text** *(not yet implemented — no `time.sleep` pauses; `FAST_MODE` toggle not present)*
 
 ## Medium upgrades (half day)
 
-5. **Inventory system**
-   - Add a tiny inventory list.
-   - Example items: rope, lantern, amulet.
-   - Choices can unlock/lock paths depending on inventory.
+5. **Inventory system** *(not yet implemented — no inventory list, items, or conditional paths)*
+6. **Branch consequences** *(not yet implemented — no "scouted" knowledge or downstream choice effects)*
+7. **Random encounters** *(not yet implemented — no random events during travel)*
+8. **Multiple endings + ending summary** *(not yet implemented — no ending types or end-game summary screen)*
 
-6. **Branch consequences**
-   - Make early choices matter later.
-   - Example: if you climbed the tree, you gain "scouted" knowledge that avoids one bad ending.
+## Bigger Feature Ideas (weekend project)
 
-7. **Random encounters (light roguelike flavor)**
-   - 2–3 random events while traveling.
-   - Example: find herbs (+health), wolf encounter (requires item/choice), hidden coin.
-
-8. **Multiple endings + ending summary**
-   - Add 6–10 endings (heroic, clever, tragic, secret).
-   - Print a summary screen: choices made, items found, ending reached.
-
-## Bigger feature ideas (weekend project)
-
-9. **Save/load support**
-   - Save progress to JSON.
-   - Continue from your last checkpoint.
-
-10. **Map-based structure**
-   - Model scenes as data (dictionary or JSON) rather than hardcoded functions.
-   - Easier to add content and avoid repetitive branching code.
-
-11. **Difficulty modes**
-   - `Story`: forgiving and more hints.
-   - `Classic`: current style.
-   - `Hardcore`: fewer clues, more dangerous outcomes.
-
-12. **Companion character system**
-   - Meet one of several companions with unique abilities.
-   - Their trust changes based on player choices.
+9. **Save/load support** *(not yet implemented — no JSON persistence or checkpoint resume)*
+10. **Map-based structure** *(not yet implemented — scenes are Python functions, not JSON data)*
+11. **Difficulty modes** ✅ *(already implemented — `story`/`classic`/`hardcore` in `constants.py`; affects health, balls, capture odds, and exhibition threshold)*
+12. **Companion character system** ✅ *(already implemented — `game/companions.py` with `train_companion`, `play_with_companion`, `run_exhibition`; companions have bond/level/mood; exhibition competition at Ridgecamp)*
 
 ## Polish and "wow" ideas
 
-13. **ASCII art scene cards**
-   - Show a small title card when entering major locations.
-
-14. **Sound hooks (optional)**
-   - Beep/chime cues for win/lose (cross-platform fallback friendly).
-
-15. **Achievements**
-   - "Explorer": visit all major locations.
-   - "Speedrunner": win in under N decisions.
-   - "Pacifist": avoid all violent outcomes.
+13. **ASCII art scene cards** *(not yet implemented — no ASCII title cards for major locations)*
+14. **Sound hooks (optional)** *(not yet implemented — no beep/chime cues for win/lose)*
+15. **Achievements** *(not yet implemented — no achievement tracking system)*
 
 ## Suggested build order
 

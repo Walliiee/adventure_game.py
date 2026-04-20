@@ -1,4 +1,2 @@
-# Wildlands adventure game and other scripts use only the standard library.
-# Python 3.10+ recommended.
-# Optional (for other scripts in this repo):
-# wikipedia-api  # used by wiki.py if you uncomment/use it
+# Wildlands adventure game — standard library only, no third-party dependencies.
+# Python 3.9+ compatible.
