@@ -3,25 +3,96 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forest Adventure for Kids</title>
+    <title>Wildlands: Orb Catcher v0.2.0</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="game">
-      <h1>🌲 Forest Adventure for Kids 🌟</h1>
-      <p class="subtitle">Pick choices together and see where the story goes! <a href="act1.html">Wildlands Act 1 (Training)</a> · <a href="character3d.html">3D Character (walk around)</a>.</p>
+      <h1>🌲 Wildlands: Orb Catcher 🌟</h1>
+      <p class="subtitle">Train your skills. Catch creatures. Build bonds. Win glory.</p>
+
+      <section class="features">
+        <h2>✨ v0.2.0 Features</h2>
+        <ul>
+          <li><strong>🎯 6 Unique Endings</strong> — Master Keeper, Legend, Explorer, Gentle One, Dropout, and more</li>
+          <li><strong>💾 Save/Load System</strong> — Pick up your adventure anytime</li>
+          <li><strong>🏆 Achievement System</strong> — 8 badges to unlock including First Catch, Bonded, and Master Collector</li>
+          <li><strong>🎒 Inventory System</strong> — Healing herbs, capture charms, companion treats, and explorer maps</li>
+          <li><strong>⚔️ Dynamic Encounters</strong> — Storms, healing springs, lost travelers, wild sightings</li>
+          <li><strong>📊 Skill System</strong> — Strength, Agility, Smarts, Spirit with primary/supplementary focus</li>
+          <li><strong>🧙 NPC Shopkeepers</strong> — Buy, sell, and trade with Ridgecamp vendors</li>
+          <li><strong>🪙 Coin Economy</strong> — Earn coins from captures and exhibitions</li>
+          <li><strong>🎭 Exhibition Mode</strong> — Compete with companions for glory and perfect scores</li>
+          <li><strong>🗺️ 5 Distinct Regions</strong> — Sunmeadow, Old Ruins, Silver River, Storm Canyon, Moonwood</li>
+        </ul>
+      </section>
 
       <section class="panel">
+        <h2>🎮 How to Play</h2>
+        <ol class="how-to-play">
+          <li><strong>Train (Ages 7-10):</strong> Start in Act 1 — train your four skills by answering Keeper questions and choose your primary focus.</li>
+          <li><strong>Explore:</strong> Visit regions to find creatures. Each has unique behaviors — some are timid, some brave, some playful.</li>
+          <li><strong>Capture:</strong> Use the right orb type, time your approach, and build bonds with your companions.</li>
+          <li><strong>Compete:</strong> Enter exhibitions to showcase your companions. Match strategy to personality for high scores!</li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h3>Quick Start</h3>
         <div class="row">
-          <label for="playerName">Adventurer name:</label>
-          <input id="playerName" type="text" maxlength="24" placeholder="Explorer" />
-          <button id="startBtn">Start</button>
+          <label for="playerName">Your Keeper name:</label>
+          <input id="playerName" type="text" maxlength="24" placeholder="Keeper" />
+          <button id="startBtn">Start Demo</button>
           <button id="restartBtn" class="hidden">Restart</button>
         </div>
 
-        <div class="stats" id="stats"></div>
-        <div class="story" id="story">Press <strong>Start</strong> to begin your adventure.</div>
+        <div class="hud" id="hud">
+          <div class="hud-section">
+            <span class="hud-label">💚 Health</span>
+            <span class="hud-value" id="healthVal">10</span>
+          </div>
+          <div class="hud-section">
+            <span class="hud-label">🪙 Coins</span>
+            <span class="hud-value" id="coinVal">0</span>
+          </div>
+          <div class="hud-section">
+            <span class="hud-label">🍀 Luck</span>
+            <span class="hud-value" id="luckVal">0</span>
+          </div>
+          <div class="hud-section">
+            <span class="hud-label">🦁 Courage</span>
+            <span class="hud-value" id="courageVal">0</span>
+          </div>
+        </div>
+
+        <div class="inventory-panel" id="inventoryPanel">
+          <h4>🎒 Inventory</h4>
+          <div class="inventory-grid" id="inventoryGrid">
+            <p class="empty-inv">Your pack is empty. Items appear here when found.</p>
+          </div>
+        </div>
+
+        <div class="achievements-panel" id="achievementsPanel">
+          <h4>🏆 Achievements</h4>
+          <div class="achievements-grid" id="achievementsGrid">
+            <div class="achievement locked" data-id="first_catch" title="Catch your first creature">🎯 First Catch</div>
+            <div class="achievement locked" data-id="explorer" title="Visit 3 different regions">🗺️ Explorer</div>
+            <div class="achievement locked" data-id="completionist" title="Visit all regions">🌟 Completionist</div>
+            <div class="achievement locked" data-id="bonded" title="Reach max bond with a companion">💕 Bonded</div>
+            <div class="achievement locked" data-id="collector" title="Catch 5+ creatures">📦 Collector</div>
+            <div class="achievement locked" data-id="master_collector" title="Catch 10+ creatures">👑 Master Collector</div>
+            <div class="achievement locked" data-id="peaceful_keeper" title="Leave more creatures than you catch">🕊️ Peaceful Keeper</div>
+            <div class="achievement locked" data-id="exhibition_champion" title="Win an exhibition">🏆 Exhibition Champion</div>
+          </div>
+        </div>
+
+        <div class="story" id="story">Press <strong>Start Demo</strong> to see a sample adventure. Play the full game with: <code>python adventure_game.py</code></div>
         <div class="choices" id="choices"></div>
+      </section>
+
+      <section class="links">
+        <p>🎮 <a href="act1.html">Play Act 1 Training</a> — Train skills (ages 7-10)</p>
+        <p>🚶 <a href="character3d.html">3D Character Demo</a> — Walk around with WASD</p>
       </section>
     </main>
 

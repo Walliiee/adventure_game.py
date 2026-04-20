@@ -4,6 +4,9 @@
   --ink: #123;
   --accent: #2f9e44;
   --accent-2: #1c7ed6;
+  --accent-3: #f59e0b;
+  --border: #d4edd9;
+  --shadow: rgba(0, 0, 0, 0.08);
 }
 
 * { box-sizing: border-box; }
@@ -14,27 +17,107 @@ body {
   color: var(--ink);
   background: linear-gradient(180deg, #d8f5d8, #f8fff4 35%);
   min-height: 100vh;
+  line-height: 1.5;
 }
 
 .game {
-  max-width: 780px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 h1 {
   margin-bottom: 0.25rem;
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .subtitle {
   margin-top: 0;
+  color: #555;
+  font-size: 1.1rem;
 }
 
+/* Features section */
+.features {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.features li {
+  padding: 0.5rem 0.75rem;
+  background: #f8fdf8;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.features strong {
+  color: var(--accent);
+}
+
+/* How to Play */
+.how-to-play {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+}
+
+.how-to-play li {
+  position: relative;
+  padding: 1rem 1rem 1rem 3rem;
+  margin: 0.75rem 0;
+  background: #f8fdf8;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.how-to-play li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: 24px;
+  height: 24px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Panel */
 .panel {
   background: var(--card);
   border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 8px 24px var(--shadow);
 }
 
 .row {
@@ -42,6 +125,7 @@ h1 {
   gap: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 input, button {
@@ -56,29 +140,160 @@ button {
   background: var(--accent);
   color: white;
   border: none;
+  transition: filter 0.15s ease;
 }
 
 button:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.1);
 }
 
 #restartBtn {
   background: var(--accent-2);
 }
 
+/* HUD */
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8fdf8;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.hud-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-radius: 10px;
+  min-width: 80px;
+}
+
+.hud-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hud-value {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+/* Inventory Panel */
+.inventory-panel {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #fef8f0;
+  border-radius: 12px;
+  border: 1px solid #f5e6d3;
+}
+
+.inventory-panel h4 {
+  margin: 0 0 0.75rem 0;
+  color: var(--accent-3);
+}
+
+.inventory-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.inventory-item {
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #f5e6d3;
+  font-size: 0.9rem;
+}
+
+.inventory-item .count {
+  display: inline-block;
+  background: var(--accent-3);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 20px;
+  margin-left: 0.5rem;
+}
+
+.empty-inv {
+  color: #888;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Achievements Panel */
+.achievements-panel {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8f5ff;
+  border-radius: 12px;
+  border: 1px solid #e6d3f5;
+}
+
+.achievements-panel h4 {
+  margin: 0 0 0.75rem 0;
+  color: #7c3aed;
+}
+
+.achievements-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.achievement {
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 2px solid #e6d3f5;
+  background: white;
+  cursor: help;
+}
+
+.achievement.locked {
+  opacity: 0.5;
+  background: #f5f5f5;
+}
+
+.achievement.unlocked {
+  border-color: #7c3aed;
+  background: #f3e8ff;
+  font-weight: bold;
+}
+
+/* Story */
 .story {
   margin-top: 1rem;
   font-size: 1.1rem;
   line-height: 1.45;
   min-height: 90px;
+  padding: 1rem;
+  background: #f8fdf8;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
 }
 
-.stats {
-  margin-top: 0.75rem;
-  font-size: 0.95rem;
-  color: #2b4;
+.story code {
+  background: #e8e8e8;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
 }
 
+/* Choices */
 .choices {
   margin-top: 1rem;
   display: grid;
@@ -88,14 +303,46 @@ button:hover {
 .choice-btn {
   text-align: left;
   background: #fff;
-  border: 2px solid #d4edd9;
+  border: 2px solid var(--border);
   color: var(--ink);
 }
 
 .choice-btn:hover {
   border-color: var(--accent);
+  background: #f8fdf8;
+}
+
+/* Links section */
+.links {
+  text-align: center;
+  padding: 1rem;
+}
+
+.links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.links a:hover {
+  text-decoration: underline;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hud {
+    justify-content: center;
+  }
+  
+  .hud-section {
+    min-width: 70px;
+  }
+  
+  .features ul {
+    grid-template-columns: 1fr;
+  }
 }
