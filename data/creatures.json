@@ -1,50 +1,162 @@
 [
   {
+    "id": "moss_bunny",
     "name": "Moss Bunny",
-    "size": "small",
-    "habitat": "meadow",
-    "temperament": "gentle",
-    "base_catch": 0.78,
-    "personality": "timid"
+    "description": "A small rabbit covered in soft green moss that helps it blend into meadows. Gentle and easily spooked.",
+    "difficulty": 1,
+    "habitat": ["meadow"],
+    "personality": "timid",
+    "rarity": "common",
+    "catch_rate_base": 0.78
   },
   {
+    "id": "spark_finch",
     "name": "Spark Finch",
-    "size": "small",
-    "habitat": "ruins",
-    "temperament": "curious",
-    "base_catch": 0.74,
-    "personality": "brave"
+    "description": "A tiny bird with metallic feathers that crackle with static electricity. Curious and drawn to shiny objects.",
+    "difficulty": 1,
+    "habitat": ["ruins"],
+    "personality": "brave",
+    "rarity": "common",
+    "catch_rate_base": 0.74
   },
   {
+    "id": "pebble_otter",
     "name": "Pebble Otter",
-    "size": "small",
-    "habitat": "river",
-    "temperament": "playful",
-    "base_catch": 0.72,
-    "personality": "playful"
+    "description": "An otter with stone-like fur patterns. Playful and loves to stack smooth river rocks.",
+    "difficulty": 2,
+    "habitat": ["river"],
+    "personality": "playful",
+    "rarity": "common",
+    "catch_rate_base": 0.72
   },
   {
+    "id": "iron_tusk",
     "name": "Iron Tusk",
-    "size": "big",
-    "habitat": "canyon",
-    "temperament": "stubborn",
-    "base_catch": 0.4,
-    "personality": "brave"
+    "description": "A massive boar with tusks like forged steel. Stubborn and difficult to approach.",
+    "difficulty": 4,
+    "habitat": ["canyon"],
+    "personality": "brave",
+    "rarity": "uncommon",
+    "catch_rate_base": 0.40
   },
   {
+    "id": "thunder_yak",
     "name": "Thunder Yak",
-    "size": "big",
-    "habitat": "highlands",
-    "temperament": "proud",
-    "base_catch": 0.36,
-    "personality": "timid"
+    "description": "A proud yak with a mane that crackles with electric charge. Thunder follows where it walks.",
+    "difficulty": 4,
+    "habitat": ["highlands"],
+    "personality": "timid",
+    "rarity": "uncommon",
+    "catch_rate_base": 0.36
   },
   {
+    "id": "moonclaw_lynx",
     "name": "Moonclaw Lynx",
-    "size": "big",
-    "habitat": "forest",
-    "temperament": "fierce",
-    "base_catch": 0.34,
-    "personality": "playful"
+    "description": "A sleek lynx with claws that shimmer like moonlight. Playful but fiercely independent.",
+    "difficulty": 3,
+    "habitat": ["forest"],
+    "personality": "playful",
+    "rarity": "uncommon",
+    "catch_rate_base": 0.34
+  },
+  {
+    "id": "ember_wolf",
+    "name": "Ember Wolf",
+    "description": "A lean wolf with fur that glows like dying coals. Loyal to those it accepts as pack.",
+    "difficulty": 3,
+    "habitat": ["forest", "ruins"],
+    "personality": "brave",
+    "rarity": "uncommon",
+    "catch_rate_base": 0.45
+  },
+  {
+    "id": "mist_stag",
+    "name": "Mist Stag",
+    "description": "An elegant stag whose antlers trail morning fog. Appears only in the early hours.",
+    "difficulty": 2,
+    "habitat": ["meadow", "forest"],
+    "personality": "timid",
+    "rarity": "uncommon",
+    "catch_rate_base": 0.55
+  },
+  {
+    "id": "crystal_moth",
+    "name": "Crystal Moth",
+    "description": "A delicate moth with wings like stained glass. Drawn to water's edge at twilight.",
+    "difficulty": 2,
+    "habitat": ["river", "meadow"],
+    "personality": "timid",
+    "rarity": "uncommon",
+    "catch_rate_base": 0.60
+  },
+  {
+    "id": "quill_bear",
+    "name": "Quill Bear",
+    "description": "A burly bear with porcupine-like spines on its back. Slow to anger, slower to forgive.",
+    "difficulty": 4,
+    "habitat": ["canyon", "forest"],
+    "personality": "brave",
+    "rarity": "rare",
+    "catch_rate_base": 0.28
+  },
+  {
+    "id": "cloud_jellyfish",
+    "name": "Cloud Jellyfish",
+    "description": "A floating creature that drifts on highland winds like a living balloon. Playful and elusive.",
+    "difficulty": 3,
+    "habitat": ["highlands"],
+    "personality": "playful",
+    "rarity": "rare",
+    "catch_rate_base": 0.32
+  },
+  {
+    "id": "mossback_tortoise",
+    "name": "Mossback Tortoise",
+    "description": "An ancient tortoise with a shell carpeted in soft moss and tiny wildflowers. Moves with infinite patience.",
+    "difficulty": 2,
+    "habitat": ["river", "meadow"],
+    "personality": "timid",
+    "rarity": "common",
+    "catch_rate_base": 0.65
+  },
+  {
+    "id": "spark_tail_fox",
+    "name": "Spark Tail Fox",
+    "description": "A clever fox with a tail that crackles with blue electricity. Brave in the face of danger.",
+    "difficulty": 3,
+    "habitat": ["ruins", "canyon"],
+    "personality": "brave",
+    "rarity": "rare",
+    "catch_rate_base": 0.38
+  },
+  {
+    "id": "dewdrop_squirrel",
+    "name": "Dewdrop Squirrel",
+    "description": "A small squirrel that collects morning dew in acorn cups. Playful and quick to befriend.",
+    "difficulty": 1,
+    "habitat": ["forest", "meadow"],
+    "personality": "playful",
+    "rarity": "common",
+    "catch_rate_base": 0.80
+  },
+  {
+    "id": "ruin_wraith",
+    "name": "Ruin Wraith",
+    "description": "A ghostly creature that haunts the crumbling ruins. Timid but drawn to those who respect the old places.",
+    "difficulty": 5,
+    "habitat": ["ruins"],
+    "personality": "timid",
+    "rarity": "rare",
+    "catch_rate_base": 0.20
+  },
+  {
+    "id": "geode_crab",
+    "name": "Geode Crab",
+    "description": "A crab with a shell that looks like a split geode, crystals glinting inside. Patient and observant.",
+    "difficulty": 2,
+    "habitat": ["river", "canyon"],
+    "personality": "timid",
+    "rarity": "common",
+    "catch_rate_base": 0.70
   }
 ]

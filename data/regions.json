@@ -1,42 +1,68 @@
 [
   {
     "id": "meadow",
-    "display": "\ud83c\udf3e Sunmeadow",
-    "flavor": "Sunmeadow rolls like a green ocean. Wind bends the tall grass around hidden paths.",
+    "display": "🌾 Sunmeadow",
+    "flavor": "Sunmeadow rolls like a green ocean. Wind bends the tall grass around hidden paths. Morning dew glistens on moss and wildflowers.",
     "available_creatures": [
-      "Moss Bunny"
+      "Moss Bunny",
+      "Mist Stag",
+      "Crystal Moth",
+      "Mossback Tortoise",
+      "Dewdrop Squirrel"
     ]
   },
   {
     "id": "ruins",
-    "display": "\ud83c\udfdb\ufe0f Old Ruins",
-    "flavor": "Old Ruins stand half-buried in moss. Echoes make every step feel like a story returning.",
+    "display": "🏛️ Old Ruins",
+    "flavor": "Old Ruins stand half-buried in moss. Echoes make every step feel like a story returning. Something ghostly watches from the shadows.",
     "available_creatures": [
-      "Spark Finch"
+      "Spark Finch",
+      "Ember Wolf",
+      "Spark Tail Fox",
+      "Ruin Wraith"
     ]
   },
   {
     "id": "river",
-    "display": "\ud83c\udfde\ufe0f Silver River",
-    "flavor": "Silver River glitters under shifting light. Smooth stones mark safe crossings for careful Keepers.",
+    "display": "🌊 Silver River",
+    "flavor": "Silver River glitters under shifting light. Smooth stones mark safe crossings for careful Keepers. Crystal wings flash at twilight.",
     "available_creatures": [
-      "Pebble Otter"
+      "Pebble Otter",
+      "Crystal Moth",
+      "Mossback Tortoise",
+      "Geode Crab"
     ]
   },
   {
     "id": "canyon",
-    "display": "\ud83e\udea8 Storm Canyon",
-    "flavor": "Storm Canyon rumbles with distant thunder. Loose gravel punishes rushed movement.",
+    "display": "🪨 Storm Canyon",
+    "flavor": "Storm Canyon rumbles with distant thunder. Loose gravel punishes rushed movement. Only the tough and spined survive here.",
     "available_creatures": [
-      "Iron Tusk"
+      "Iron Tusk",
+      "Quill Bear",
+      "Spark Tail Fox",
+      "Geode Crab"
     ]
   },
   {
     "id": "forest",
-    "display": "\ud83c\udf32 Moonwood",
-    "flavor": "Moonwood is cool and shadowed. Quiet observation reveals life before noise ever will.",
+    "display": "🌲 Moonwood",
+    "flavor": "Moonwood is cool and shadowed. Quiet observation reveals life before noise ever will. Moonlight filters through ancient boughs.",
     "available_creatures": [
-      "Moonclaw Lynx"
+      "Moonclaw Lynx",
+      "Ember Wolf",
+      "Mist Stag",
+      "Quill Bear",
+      "Dewdrop Squirrel"
+    ]
+  },
+  {
+    "id": "highlands",
+    "display": "⛰️ Thunder Highlands",
+    "flavor": "Thunder Highlands rise above the clouds. The air is thin and charged with static. Strange shapes drift on the wind currents.",
+    "available_creatures": [
+      "Thunder Yak",
+      "Cloud Jellyfish"
     ]
   }
 ]
