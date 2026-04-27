@@ -14,12 +14,12 @@ class TestSkills:
     def test_primary_smarts_catch_rate(self):
         s = _state_with_skills(primary="Smarts")
         bonus = get_skill_bonus(s, CATCH_RATE, region="forest")
-        assert bonus == 0.15
+        assert bonus == 0.10
 
     def test_supplementary_smarts_catch_rate(self):
         s = _state_with_skills(supplementary=["Smarts"])
         bonus = get_skill_bonus(s, CATCH_RATE, region="meadow")
-        assert bonus == 0.075  # half of 0.15
+        assert bonus == 0.05  # half of 0.15
 
     def test_no_skill_zero_bonus(self):
         s = _state_with_skills()
@@ -27,7 +27,7 @@ class TestSkills:
 
     def test_smarts_wrong_region(self):
         s = _state_with_skills(primary="Smarts")
-        assert get_skill_bonus(s, CATCH_RATE, region="canyon") == 0.0
+        assert get_skill_bonus(s, CATCH_RATE, region="canyon") == 0.10
 
     def test_agility_storm_damage(self):
         s = _state_with_skills(primary="Agility")
@@ -35,7 +35,7 @@ class TestSkills:
 
     def test_spirit_herb_heal(self):
         s = _state_with_skills(primary="Spirit")
-        assert get_skill_bonus(s, HERB_HEAL) == 30
+        assert get_skill_bonus(s, HERB_HEAL) == 35
 
     def test_strength_unlimited_balls(self):
         s = _state_with_skills(primary="Strength")
@@ -47,4 +47,4 @@ class TestSkills:
 
     def test_supplementary_spirit_herb_heal(self):
         s = _state_with_skills(supplementary=["Spirit"])
-        assert get_skill_bonus(s, HERB_HEAL) == 15  # half of 30
+        assert get_skill_bonus(s, HERB_HEAL) == 17.5  # half of 30

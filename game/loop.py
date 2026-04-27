@@ -11,14 +11,13 @@ from game.companions import (
     pick_companion,
     use_companion_ability,
     reset_daily_abilities,
-    get_brave_capture_bonus,
 )
-from game.save import save_game, load_game, has_save
+from game.save import save_game
 from game.endings import show_ending
 from game.achievements import check_achievements, show_achievement
 from game.inventory import show_inventory, use_item, find_item_on_explore
 from game.encounters import roll_encounter, handle_encounter
-from game.npc import npc_menu, interact_with_npc
+from game.npc import npc_menu
 
 
 def _check_and_show_achievements(state: dict) -> None:

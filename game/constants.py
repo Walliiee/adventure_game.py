@@ -64,12 +64,12 @@ def _load_npcs() -> tuple[tuple, tuple, dict]:
 # Creatures (by habitat: meadow, ruins, river, canyon, highlands, forest)
 # -----------------------------------------------------------------------------
 _CREATURES_FALLBACK = [
-    {"name": "Moss Bunny", "size": "small", "habitat": "meadow", "temperament": "gentle", "base_catch": 0.78},
-    {"name": "Spark Finch", "size": "small", "habitat": "ruins", "temperament": "curious", "base_catch": 0.74},
-    {"name": "Pebble Otter", "size": "small", "habitat": "river", "temperament": "playful", "base_catch": 0.72},
-    {"name": "Iron Tusk", "size": "big", "habitat": "canyon", "temperament": "stubborn", "base_catch": 0.4},
-    {"name": "Thunder Yak", "size": "big", "habitat": "highlands", "temperament": "proud", "base_catch": 0.36},
-    {"name": "Moonclaw Lynx", "size": "big", "habitat": "forest", "temperament": "fierce", "base_catch": 0.34},
+    {"name": "Moss Bunny", "size": "small", "habitat": ["meadow"], "temperament": "gentle", "catch_rate_base": 0.78},
+    {"name": "Spark Finch", "size": "small", "habitat": ["ruins"], "temperament": "curious", "catch_rate_base": 0.74},
+    {"name": "Pebble Otter", "size": "small", "habitat": ["river"], "temperament": "playful", "catch_rate_base": 0.72},
+    {"name": "Iron Tusk", "size": "big", "habitat": ["canyon"], "temperament": "stubborn", "catch_rate_base": 0.4},
+    {"name": "Thunder Yak", "size": "big", "habitat": ["highlands"], "temperament": "proud", "catch_rate_base": 0.36},
+    {"name": "Moonclaw Lynx", "size": "big", "habitat": ["forest"], "temperament": "fierce", "catch_rate_base": 0.34},
 ]
 
 # -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ _NPC_SCENES_FALLBACK = {
 # -----------------------------------------------------------------------------
 # Capture rules
 # -----------------------------------------------------------------------------
-WRONG_BALL_PENALTY = 0.2
+WRONG_BALL_PENALTY = 0.30
 MIN_COMPANIONS_FOR_EXHIBITION = 2
 
 

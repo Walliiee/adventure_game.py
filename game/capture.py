@@ -8,10 +8,23 @@ from game.constants import (
     CAPTURE_HARDCORE_PENALTY,
     WRONG_BALL_PENALTY,
     NPC_NAMES,
+    BALLS_BY_DIFFICULTY,
 )
 from game.cli import get_player_choice
-from game.skills import get_skill_bonus, CATCH_RATE, UNLIMITED_BALLS
+from game.skills import get_skill_bonus, CATCH_RATE, UNLIMITED_BALLS, HIGHLANDS_CATCH
 from game.companions import get_brave_capture_bonus, pick_companion
+
+
+def _get_max_balls(state: dict, ball_type: str) -> int:
+    """Return max allowed balls for this type, capping Strength at 2x normal."""
+    difficulty = state.get("difficulty", "classic")
+    base_max = BALLS_BY_DIFFICULTY.get(difficulty, {}).get(ball_type, 6 if ball_type == "mini" else 3)
+    unlimited_bonus = get_skill_bonus(state, UNLIMITED_BALLS)
+    if unlimited_bonus >= 1.0:
+        return base_max * 2  # Primary Strength: cap at 2x normal
+    elif unlimited_bonus > 0:
+        return int(base_max * 1.5)  # Supplementary: cap at 1.5x
+    return base_max
 
 
 def attempt_capture(state: dict, creature: dict) -> None:
@@ -34,23 +47,29 @@ def attempt_capture(state: dict, creature: dict) -> None:
         return
 
     chosen = ball_type if pick == 0 else alt_ball
-    # Act 1 skill: Strength primary = unlimited balls; supplementary = 50% refund chance
+    # Act 1 skill: Strength primary = balls up to 2x; supplementary = up to 1.5x with refund chance
     if state["balls"][chosen] <= 0:
         unlimited_bonus = get_skill_bonus(state, UNLIMITED_BALLS)
-        if unlimited_bonus >= 1.0:
-            # Primary Strength: balls never run out — give a free one
+        max_balls = _get_max_balls(state, chosen)
+        if state["balls"][chosen] < max_balls and unlimited_bonus >= 1.0:
+            # Primary Strength: recover up to 2x cap
             state["balls"][chosen] += 1
             print(f"💪 Your Strength training kicks in — you find an extra {chosen.title()} Orb!")
         elif unlimited_bonus > 0 and random.random() < unlimited_bonus:
-            # Supplementary Strength: 50% chance to find an extra ball
-            state["balls"][chosen] += 1
-            print(f"💪 Your Strength training helps — you scrape together one more {chosen.title()} Orb!")
+            # Supplementary Strength: 50% chance to recover one (capped)
+            max_balls = _get_max_balls(state, chosen)
+            if state["balls"][chosen] < max_balls:
+                state["balls"][chosen] += 1
+                print(f"💪 Your Strength training helps — you scrape together one more {chosen.title()} Orb!")
+            else:
+                print(f"No {chosen.title()} Orbs left! The creature escapes.")
+                return
         else:
             print(f"No {chosen.title()} Orbs left! The creature escapes.")
             return
 
     state["balls"][chosen] -= 1
-    chance = creature["base_catch"]
+    chance = creature["catch_rate_base"]
     if chosen != ball_type:
         chance -= WRONG_BALL_PENALTY
     if state["difficulty"] == "story":
@@ -58,9 +77,12 @@ def attempt_capture(state: dict, creature: dict) -> None:
     elif state["difficulty"] == "hardcore":
         chance -= CAPTURE_HARDCORE_PENALTY
 
-    # Act 1 skill bonus: Smarts (tracking) boosts catch rate in forest/meadow
+    # Act 1 skill bonus: Smarts boosts catch rate in all regions
     region = state.get("current_region", "")
     chance += get_skill_bonus(state, CATCH_RATE, region=region)
+
+    # Spirit bonus for highlands
+    chance += get_skill_bonus(state, HIGHLANDS_CATCH, region=region)
 
     # Companion bonus: Brave companion adds +10% capture rate when present
     if state["captured"]:

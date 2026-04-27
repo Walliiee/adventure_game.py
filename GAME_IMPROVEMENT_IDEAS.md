@@ -11,15 +11,15 @@ Here are some fun ways to make `adventure_game.py` more playable while keeping t
 
 ## Medium upgrades (half day)
 
-5. **Inventory system** *(not yet implemented — no inventory list, items, or conditional paths)*
+5. **Inventory system** ✅ *(already implemented — `game/inventory.py` with `show_inventory`, `use_item`, `find_item_on_explore`; items: healing_herb, capture_charm, explorer_map, companion_treat)*
 6. **Branch consequences** *(not yet implemented — no "scouted" knowledge or downstream choice effects)*
-7. **Random encounters** *(not yet implemented — no random events during travel)*
-8. **Multiple endings + ending summary** *(not yet implemented — no ending types or end-game summary screen)*
+7. **Random encounters** ✅ *(already implemented — `game/encounters.py` with weighted random encounters: wild_creature, healing_spring, lost_traveler, storm, nothing)*
+8. **Multiple endings + ending summary** ✅ *(already implemented — `game/endings.py` with `show_ending`; endings based on companions, bond, exhibition score)*
 
 ## Bigger Feature Ideas (weekend project)
 
-9. **Save/load support** *(not yet implemented — no JSON persistence or checkpoint resume)*
-10. **Map-based structure** *(not yet implemented — scenes are Python functions, not JSON data)*
+9. **Save/load support** ✅ *(already implemented — `game/save.py` with JSON serialization/deserialization, `save_game`, `load_game`, `has_save`)*
+10. **Map-based structure** ✅ *(already implemented — regions with `REGION_IDS`, `REGION_ALIASES`, `HABITATS` in `constants.py`; JSON scene data via `get_npc_scene` and `data/npcs.json`)*
 11. **Difficulty modes** ✅ *(already implemented — `story`/`classic`/`hardcore` in `constants.py`; affects health, balls, capture odds, and exhibition threshold)*
 12. **Companion character system** ✅ *(already implemented — `game/companions.py` with `train_companion`, `play_with_companion`, `run_exhibition`; companions have bond/level/mood; exhibition competition at Ridgecamp)*
 
@@ -27,7 +27,7 @@ Here are some fun ways to make `adventure_game.py` more playable while keeping t
 
 13. **ASCII art scene cards** *(not yet implemented — no ASCII title cards for major locations)*
 14. **Sound hooks (optional)** *(not yet implemented — no beep/chime cues for win/lose)*
-15. **Achievements** *(not yet implemented — no achievement tracking system)*
+15. **Achievements** ✅ *(already implemented — `game/achievements.py` with `check_achievements`, `show_achievement`; tracks first_capture, high_bond, perfect_exhibition)*
 
 ## Suggested build order
 

@@ -6,7 +6,7 @@ import random
 from pathlib import Path
 from typing import Optional
 
-from game.constants import REGION_IDS, CREATURES
+from game.constants import REGION_IDS
 from game.cli import get_player_choice
 
 

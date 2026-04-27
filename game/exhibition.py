@@ -169,7 +169,7 @@ def run_exhibition(state: dict) -> tuple[bool, bool]:
             score = min(100, score + 5)
 
     # Narrative
-    print(f"\n🏟️ RIDGECAMP EXHIBITION MATCH")
+    print("\n🏟️ RIDGECAMP EXHIBITION MATCH")
     print("=" * 45)
     beats = NARRATIVE_BEATS[strategy]
     for beat in beats:

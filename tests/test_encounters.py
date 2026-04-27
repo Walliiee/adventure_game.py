@@ -1,5 +1,5 @@
 """Tests for encounter handling with mocked random."""
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from game.encounters import roll_encounter, handle_encounter
 from game.state import create_game_state
 

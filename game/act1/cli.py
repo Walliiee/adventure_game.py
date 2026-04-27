@@ -115,6 +115,8 @@ def print_training_guidance(state: Act1State) -> None:
         return
 
     primary = state["primary"]
+    if primary is None:
+        return
     primary_left = PRIMARY_THRESHOLD - state["skills"][primary]
     supp_left = {
         s: SUPPLEMENTARY_THRESHOLD - state["skills"][s]

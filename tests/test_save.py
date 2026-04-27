@@ -1,9 +1,8 @@
 """Tests for save/load system."""
-import json
 import unittest
 from pathlib import Path
 
-from game.save import save_game, load_game, has_save, DEFAULT_SAVE_PATH
+from game.save import save_game, load_game
 from game.state import create_game_state
 
 

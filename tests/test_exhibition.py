@@ -1,6 +1,5 @@
 """Tests for the exhibition system."""
 from game.exhibition import _compute_exhibition_score, STRATEGIES
-from game.state import create_game_state
 
 
 class TestExhibitionScoring:

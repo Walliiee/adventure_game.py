@@ -50,7 +50,7 @@ def get_npc_scene(state: dict, region: str) -> str | None:
 
 def find_creature(region: str) -> dict:
     """Spawn a creature for the given region (level 1, bond 1, mood curious)."""
-    candidates = [c for c in CREATURES if c["habitat"] == region]
+    candidates = [c for c in CREATURES if region in c["habitat"]]
     if not candidates:
         candidates = CREATURES
     creature = deepcopy(random.choice(candidates))

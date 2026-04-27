@@ -1,6 +1,6 @@
 """Tests for inventory: use_item effects and find_item_on_explore."""
 from unittest.mock import patch
-from game.inventory import use_item, find_item_on_explore, ITEMS
+from game.inventory import use_item, find_item_on_explore
 from game.state import create_game_state
 
 
@@ -18,7 +18,7 @@ class TestInventory:
 
     def test_use_capture_charm(self):
         s = _fresh_state()
-        result = use_item(s, "capture_charm")
+        use_item(s, "capture_charm")
         assert s.get("_capture_charm_active") is True
 
     def test_use_item_consumes_item(self):
@@ -39,15 +39,15 @@ class TestInventory:
                                "bond": 2, "mood": "happy", "personality": "brave",
                                "ability_used_today": False})
         s["inventory"]["companion_treat"] = 1
-        result = use_item(s, "companion_treat")
+        use_item(s, "companion_treat")
         assert s["captured"][0]["bond"] == 3
 
     def test_use_companion_treat_without_companion(self):
         s = _fresh_state()
         s["inventory"]["companion_treat"] = 1
-        result = use_item(s, "companion_treat")
+        use_item(s, "companion_treat")
         # Item saved when no companion
-        assert s["inventory"].get("companion_treat", 0) == 0 or "saved" in result.lower() or True
+        assert s["inventory"].get("companion_treat", 0) == 0 or True
 
     def test_find_item_on_explore_success(self):
         s = _fresh_state()

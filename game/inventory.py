@@ -4,10 +4,8 @@ Inventory system: items, effects, discovery, and use.
 from __future__ import annotations
 
 import random
-from copy import deepcopy
 
 from game.constants import CREATURES
-from game.skills import get_skill_bonus, HERB_HEAL
 
 # -----------------------------------------------------------------------------
 # Item definitions
@@ -113,7 +111,7 @@ def find_item_on_explore(state: dict) -> str | None:
 
 def get_creatures_in_region(region: str) -> list[dict]:
     """Return creature definitions for a given region."""
-    return [c for c in CREATURES if c["habitat"] == region]
+    return [c for c in CREATURES if region in c["habitat"]]
 
 
 def attempt_mini_capture(state: dict, creature: dict) -> bool:
@@ -126,7 +124,7 @@ def attempt_mini_capture(state: dict, creature: dict) -> bool:
         return False
 
     state["balls"][ball_type] -= 1
-    chance = creature["base_catch"]
+    chance = creature["catch_rate_base"]
     if state["difficulty"] == "story":
         chance += CAPTURE_STORY_BONUS
     elif state["difficulty"] == "hardcore":

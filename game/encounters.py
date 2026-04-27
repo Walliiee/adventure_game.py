@@ -7,7 +7,7 @@ import random
 from copy import deepcopy
 
 from game.constants import CREATURES
-from game.skills import get_skill_bonus, STORM_DAMAGE, WILD_SIGHTING
+from game.skills import get_skill_bonus, WILD_SIGHTING
 
 
 # (encounter_type, weight)
@@ -70,7 +70,7 @@ def handle_encounter(encounter_type: str, state: dict) -> str:
     elif encounter_type == "wild_creature":
         region = state.get("current_region", None)
         if region:
-            candidates = [c for c in CREATURES if c["habitat"] == region]
+            candidates = [c for c in CREATURES if region in c["habitat"]]
         if not candidates:
             candidates = CREATURES
         creature = deepcopy(random.choice(candidates))
