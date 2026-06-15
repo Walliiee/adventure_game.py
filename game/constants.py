@@ -15,7 +15,7 @@ def _load_json(filename: str, fallback: list | dict) -> list | dict:
     """Load a JSON data file, returning fallback if file is missing or corrupt."""
     path = _DATA_DIR / filename
     try:
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
         return fallback

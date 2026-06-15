@@ -25,12 +25,12 @@ class TestDataFilesValid(unittest.TestCase):
         """Every shipped data file must parse — a typo here silently disables systems."""
         for path in sorted(_DATA_DIR.glob("*.json")):
             with self.subTest(file=path.name):
-                with open(path) as f:
+                with open(path, encoding="utf-8") as f:
                     json.load(f)  # raises on malformed JSON
 
     def test_npcs_json_exposes_authored_npcs(self):
         """npcs.json must actually load (it was invalid JSON, falling back silently)."""
-        with open(_DATA_DIR / "npcs.json") as f:
+        with open(_DATA_DIR / "npcs.json", encoding="utf-8") as f:
             npcs = json.load(f)
         names = {n["name"] for n in npcs}
         self.assertEqual(names, {"Eldra", "Torv", "Mira"})

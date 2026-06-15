@@ -18,7 +18,7 @@ _DIALOGUE_PATH = Path(__file__).resolve().parent.parent / "data" / "companion_di
 
 def _load_dialogue():
     try:
-        with open(_DIALOGUE_PATH) as f:
+        with open(_DIALOGUE_PATH, encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
