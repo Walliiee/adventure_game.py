@@ -85,8 +85,9 @@ def check_achievements(state: dict) -> list[str]:
     if "explorer" not in unlocked_ids and len(region_progress) >= 3:
         newly_unlocked.append("explorer")
     
-    # Completionist (all 5 regions)
-    all_regions = {"meadow", "ruins", "river", "canyon", "forest"}
+    # Completionist (every region that actually exists, incl. highlands)
+    from game.constants import REGION_IDS
+    all_regions = set(REGION_IDS)
     if "completionist" not in unlocked_ids and region_progress >= all_regions:
         newly_unlocked.append("completionist")
     

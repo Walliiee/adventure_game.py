@@ -56,6 +56,12 @@ CROWD_REACTIONS = {
 }
 
 
+# Score at/above which a showing counts as legendary (a "perfect" win) and unlocks
+# the Legend ending. Reachable with a maxed, well-matched companion and a healthy
+# roster — it no longer requires hitting an exact 100.
+LEGEND_SCORE = 95
+
+
 def _get_crowd_reaction(score: int) -> str:
     for (lo, hi), text in CROWD_REACTIONS.items():
         if lo <= score <= hi:
@@ -189,9 +195,9 @@ def run_exhibition(state: dict) -> tuple[bool, bool]:
         print(f"  💰 +{coins_awarded} coins! (Total: {state['coins']})")
         state["exhibition_won"] = True
 
-        if score == 100:
+        if score >= LEGEND_SCORE:
             state["exhibition_perfect_win"] = True
-            print("  ⭐ PERFECT SCORE — The Legend ending is within reach!")
+            print("  ⭐ A legendary performance — the Legend ending is yours!")
     else:
         print(f"\n  😔 Score {score} — not enough to win. (Need 80+)")
         print("  Train harder, build stronger bonds, and try again.")

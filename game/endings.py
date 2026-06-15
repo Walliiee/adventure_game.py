@@ -15,7 +15,7 @@ ENDINGS: dict[str, EndingData] = {
     "master_keeper": {
         "title": "The Master Keeper",
         "message": "Your companions follow you anywhere.",
-        "flavor_text": "You caught 8+ creatures and every companion has max bond. Ridgecamp remembers your name."
+        "flavor_text": "You caught 8+ creatures and built a strongly bonded core. Ridgecamp remembers your name."
     },
     "legend": {
         "title": "The Legend",
@@ -54,17 +54,16 @@ def determine_ending(state: dict) -> str:
     peaceful_leaves = state.get("peaceful_leaves", 0)
     region_progress = state.get("region_progress", set())
     exhibition_perfect = state.get("exhibition_perfect_win", False)
-    all_regions = {"meadow", "ruins", "river", "canyon", "forest"}
+    from game.constants import REGION_IDS
+    all_regions = set(REGION_IDS)
     
     # Check for Legend: perfect exhibition score
     if exhibition_perfect:
         return "legend"
     
-    # Check for Master Keeper: 8+ creatures and all companions max bond
-    if len(captured) >= 8:
-        max_bond_count = sum(1 for c in captured if c.get("bond", 0) >= 5)
-        if max_bond_count == len(captured) and len(captured) > 0:
-            return "master_keeper"
+    # Check for Master Keeper: a big roster (8+) with a strongly bonded core (4+ at max bond).
+    if len(captured) >= 8 and sum(1 for c in captured if c.get("bond", 0) >= 5) >= 4:
+        return "master_keeper"
     
     # Check for Explorer: visited all regions
     if region_progress >= all_regions:

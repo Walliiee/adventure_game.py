@@ -1,20 +1,17 @@
 """
-Companion actions: train, play, exhibition match.
+Companion actions: train, play, and daily abilities.
 """
 import json
 import random
 from pathlib import Path
 
-from game.constants import (
-    MIN_COMPANIONS_FOR_EXHIBITION,
-    EXHIBITION_THRESHOLD,
-    NPC_NAMES,
-)
+from game.constants import NPC_NAMES
 from game.cli import get_player_choice
 
 
 # Load companion dialogue data
 _DIALOGUE_PATH = Path(__file__).resolve().parent.parent / "data" / "companion_dialogue.json"
+
 
 def _load_dialogue():
     try:
@@ -41,7 +38,7 @@ def _get_dialogue(companion: dict) -> str:
     personality = companion.get("personality", "brave")
     bond_level = _get_bond_level(companion)
     mood = companion.get("mood", "motivated")
-    
+
     try:
         lines = dialogue_data[personality][bond_level][mood]
         return random.choice(lines)
@@ -52,7 +49,7 @@ def _get_dialogue(companion: dict) -> str:
 def _get_personality_bonus(companion: dict, action: str) -> dict:
     """Return bonus info for personality-based actions."""
     personality = companion.get("personality", "brave")
-    
+
     if personality == "brave":
         return {"type": "capture", "bonus": 0.1, "desc": "Brave companion: +10% capture rate"}
     elif personality == "timid":
@@ -82,12 +79,12 @@ def train_companion(state: dict) -> bool:
     companion["level"] += 1
     companion["bond"] += 1
     companion["mood"] = "motivated"
-    
+
     # Show dialogue
     dialogue = _get_dialogue(companion)
     print(f"💬 {companion['name']}: \"{dialogue}\"")
-    
-    state["npc_bond"][NPC_NAMES[2]] += 1  # Ari
+
+    state["npc_bond"][NPC_NAMES[2]] += 1  # scout (Mira)
     return True
 
 
@@ -97,22 +94,22 @@ def play_with_companion(state: dict) -> bool:
     if not companion:
         return False
     print(f"You play fetch and rhythm games with {companion['name']} at camp.")
-    
+
     # Playful personality bonus: +1 extra bond from play
     personality = companion.get("personality", "brave")
     bonus = 2 if personality == "playful" else 1
     if personality == "playful":
         print(f"🎾 {companion['name']} is extra playful and bonds faster!")
-    
+
     companion["bond"] += bonus
     companion["mood"] = "happy"
-    
+
     # Show dialogue
     dialogue = _get_dialogue(companion)
     print(f"💬 {companion['name']}: \"{dialogue}\"")
-    
+
     state["health"] += 1
-    state["npc_bond"][NPC_NAMES[1]] += 1  # Sol
+    state["npc_bond"][NPC_NAMES[1]] += 1  # merchant (Torv)
     return True
 
 
@@ -130,46 +127,17 @@ def get_timid_healing_bonus(companion: dict) -> int:
     return 0
 
 
-def run_exhibition(state: dict) -> tuple[bool, bool]:
-    """Run the exhibition match. Returns tuple[won: bool, action_performed: bool]."""
-    print("\n🏟️ Ridgecamp Exhibition Match begins!")
-    if len(state["captured"]) < MIN_COMPANIONS_FOR_EXHIBITION:
-        print("You needed at least 2 companions to compete. You are not ready yet.")
-        return False, False
-
-    team_power = sum(c["level"] + c["bond"] for c in state["captured"])
-    bonus = len(state["region_progress"]) + sum(state["npc_bond"].values())
-    threshold = EXHIBITION_THRESHOLD[state["difficulty"]]
-
-    print(f"Team Power: {team_power} | Synergy Bonus: {bonus} | Target: {threshold}")
-    
-    # Check for perfect win (exact threshold match)
-    total_score = team_power + bonus
-    if total_score == threshold:
-        state["exhibition_perfect_win"] = True
-    
-    if total_score >= threshold:
-        print("🎉 Your companions perform brilliantly. Ridgecamp crowns you Champion Keeper!")
-        state["exhibition_won"] = True
-        # Award coins for winning exhibition
-        state["coins"] = state.get("coins", 0) + 1
-        print(f"💰 +1 coin for winning! (Total: {state['coins']})")
-        return True, True
-    print("Ari wins this season, but your team shows promise. Train harder and return.")
-    return False, True
-
-
 def use_companion_ability(state: dict, companion: dict) -> str:
     """Use companion's daily active ability. Returns result message."""
     personality = companion.get("personality", "brave")
-    
+
     # Check if already used today
     used_today = companion.get("ability_used_today", False)
     if used_today:
         return f"{companion['name']} has already used their ability today."
-    
+
     companion["ability_used_today"] = True
-    
+
     if personality == "brave":
         return f"🦅 {companion['name']} scouts ahead! (Scout ability used)"
     elif personality == "timid":
@@ -179,7 +147,7 @@ def use_companion_ability(state: dict, companion: dict) -> str:
     elif personality == "playful":
         state["companion_energized"] = True
         return f"⚡ {companion['name']} energizes you! Next action will skip fatigue penalty."
-    
+
     return "Ability used."
 
 

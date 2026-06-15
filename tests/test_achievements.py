@@ -1,5 +1,6 @@
 """Tests for achievement unlock conditions."""
 from game.achievements import check_achievements, ACHIEVEMENTS
+from game.constants import REGION_IDS
 from game.state import create_game_state
 
 
@@ -30,7 +31,7 @@ class TestAchievements:
         assert "explorer" in check_achievements(s)
 
     def test_completionist_all_regions(self):
-        s = _state_with(regions={"meadow", "ruins", "river", "canyon", "forest"})
+        s = _state_with(regions=set(REGION_IDS))
         assert "completionist" in check_achievements(s)
 
     def test_bonded_max_bond(self):

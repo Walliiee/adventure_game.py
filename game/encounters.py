@@ -95,6 +95,7 @@ def handle_encounter(encounter_type: str, state: dict) -> str:
             else:
                 return f"A wild {creature['name']} darts across your path — it got away."
         else:
+            state["peaceful_leaves"] = state.get("peaceful_leaves", 0) + 1
             return f"A wild {creature['name']} darts across your path. You let it go."
 
     return "An odd feeling passes."

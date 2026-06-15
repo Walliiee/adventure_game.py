@@ -23,18 +23,29 @@ def _deserialize(data: dict) -> GameState:
     data["region_progress"] = set(data.get("region_progress", []))
     data["seen_npc_scenes"] = set(data.get("seen_npc_scenes", []))
     data["regions_visited"] = set(data.get("regions_visited", []))
-    # Ensure new fields have defaults for backward compatibility
+    # Ensure every field the engine reads has a default, so older/partial saves
+    # (written before a field existed) don't KeyError on first access after load.
     data.setdefault("peaceful_leaves", 0)
     data.setdefault("exhibition_perfect_win", False)
     data.setdefault("exhibition_won", False)
     data.setdefault("achievements_unlocked", [])
+    data.setdefault("coins", 0)
+    data.setdefault("inventory", {})
+    data.setdefault("balls", {"mini": 0, "mega": 0})
+    data.setdefault("npc_bond", {})
+    data.setdefault("primary_skill", None)
+    data.setdefault("supplementary_skills", [])
+    data.setdefault("companion_energized", False)
     return data
 
 
 def save_game(state: GameState, path: Path | None = None) -> None:
-    """Persist game state to JSON."""
+    """Persist game state to JSON. Never crashes the session on an I/O error."""
     path = path or DEFAULT_SAVE_PATH
-    path.write_text(json.dumps(_serialize(state), indent=2), encoding="utf-8")
+    try:
+        path.write_text(json.dumps(_serialize(state), indent=2), encoding="utf-8")
+    except OSError as exc:
+        print(f"⚠️  Could not save game ({exc}). Continuing without saving.")
 
 
 def load_game(path: Path | None = None) -> GameState | None:

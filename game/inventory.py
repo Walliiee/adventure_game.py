@@ -77,7 +77,7 @@ def use_item(state: dict, item_id: str) -> str:
         from game.constants import REGION_IDS
         lines = ["🗺️  Explorer Map reveals:"]
         for rid in REGION_IDS:
-            creatures_in_region = [c["name"] for c in CREATURES if c["habitat"] == rid]
+            creatures_in_region = [c["name"] for c in CREATURES if rid in c["habitat"]]
             if creatures_in_region:
                 lines.append(f"  {rid.title()}: {', '.join(creatures_in_region)}")
             else:
