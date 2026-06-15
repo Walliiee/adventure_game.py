@@ -84,7 +84,7 @@ def train_companion(state: dict) -> bool:
     dialogue = _get_dialogue(companion)
     print(f"💬 {companion['name']}: \"{dialogue}\"")
 
-    state["npc_bond"][NPC_NAMES[2]] += 1  # scout (Mira)
+    state["npc_bond"][NPC_NAMES[2]] = state["npc_bond"].get(NPC_NAMES[2], 0) + 1  # scout (Mira)
     return True
 
 
@@ -109,7 +109,7 @@ def play_with_companion(state: dict) -> bool:
     print(f"💬 {companion['name']}: \"{dialogue}\"")
 
     state["health"] += 1
-    state["npc_bond"][NPC_NAMES[1]] += 1  # merchant (Torv)
+    state["npc_bond"][NPC_NAMES[1]] = state["npc_bond"].get(NPC_NAMES[1], 0) + 1  # merchant (Torv)
     return True
 
 

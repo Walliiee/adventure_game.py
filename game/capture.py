@@ -94,8 +94,9 @@ def attempt_capture(state: dict, creature: dict) -> None:
                 print(f"🦁 {companion['name']} stands bravely by your side! +10% capture rate.")
 
     # Capture Charm (from inventory.use_item) — consume it on this attempt for +20%.
+    # Use max() so it never lowers an already-superior chance back down to 0.99.
     if state.pop("_capture_charm_active", False):
-        chance = min(0.99, chance + 0.20)
+        chance = max(chance, min(0.99, chance + 0.20))
         print("✨ Your Capture Charm flares — +20% catch rate on this attempt!")
 
     roll = random.random()
@@ -111,7 +112,7 @@ def attempt_capture(state: dict, creature: dict) -> None:
         creature.setdefault("personality", "brave")
         creature.setdefault("ability_used_today", False)
         state["captured"].append(creature)
-        state["npc_bond"][NPC_NAMES[0]] += 1  # keeper (Eldra)
+        state["npc_bond"][NPC_NAMES[0]] = state["npc_bond"].get(NPC_NAMES[0], 0) + 1  # keeper (Eldra)
         # Add coins for successful capture
         state["coins"] = state.get("coins", 0) + 2
         print(f"💰 +2 coins! (Total: {state['coins']})")

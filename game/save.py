@@ -31,8 +31,15 @@ def _deserialize(data: dict) -> GameState:
     data.setdefault("achievements_unlocked", [])
     data.setdefault("coins", 0)
     data.setdefault("inventory", {})
-    data.setdefault("balls", {"mini": 0, "mega": 0})
-    data.setdefault("npc_bond", {})
+    # balls/npc_bond are indexed by fixed keys, so populate each key (not just the
+    # top-level dict) or a capture/train would KeyError on a partial old save.
+    balls = data.setdefault("balls", {})
+    balls.setdefault("mini", 0)
+    balls.setdefault("mega", 0)
+    npc_bond = data.setdefault("npc_bond", {})
+    from game.constants import NPC_NAMES
+    for name in NPC_NAMES:
+        npc_bond.setdefault(name, 0)
     data.setdefault("primary_skill", None)
     data.setdefault("supplementary_skills", [])
     data.setdefault("companion_energized", False)

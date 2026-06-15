@@ -82,7 +82,12 @@ class TestSaveHardening(unittest.TestCase):
         self.assertIsNotNone(state)
         for key in ("coins", "inventory", "balls", "npc_bond", "primary_skill", "supplementary_skills"):
             self.assertIn(key, state)
-        self.assertEqual(state["balls"], {"mini": 0, "mega": 0})
+        # balls and npc_bond must be populated by key (not just present), so the
+        # engine's `state["npc_bond"][name] += 1` / `state["balls"]["mini"]` can't KeyError.
+        self.assertEqual(set(state["balls"]), {"mini", "mega"})
+        from game.constants import NPC_NAMES
+        for name in NPC_NAMES:
+            self.assertIn(name, state["npc_bond"])
 
     def test_save_does_not_crash_on_io_error(self):
         state = create_game_state("Tester", "story")

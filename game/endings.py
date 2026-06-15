@@ -4,6 +4,8 @@ Endings system: 6 distinct endings based on playstyle.
 from __future__ import annotations
 from typing import TypedDict
 
+from game.constants import REGION_IDS
+
 
 class EndingData(TypedDict):
     title: str
@@ -54,7 +56,6 @@ def determine_ending(state: dict) -> str:
     peaceful_leaves = state.get("peaceful_leaves", 0)
     region_progress = state.get("region_progress", set())
     exhibition_perfect = state.get("exhibition_perfect_win", False)
-    from game.constants import REGION_IDS
     all_regions = set(REGION_IDS)
     
     # Check for Legend: perfect exhibition score

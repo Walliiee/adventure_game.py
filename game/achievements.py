@@ -4,6 +4,8 @@ Achievement system: 8 achievements that unlock during gameplay.
 from __future__ import annotations
 from typing import TypedDict
 
+from game.constants import REGION_IDS
+
 
 class AchievementData(TypedDict):
     id: str
@@ -86,7 +88,6 @@ def check_achievements(state: dict) -> list[str]:
         newly_unlocked.append("explorer")
     
     # Completionist (every region that actually exists, incl. highlands)
-    from game.constants import REGION_IDS
     all_regions = set(REGION_IDS)
     if "completionist" not in unlocked_ids and region_progress >= all_regions:
         newly_unlocked.append("completionist")
