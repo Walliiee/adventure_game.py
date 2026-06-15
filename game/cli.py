@@ -18,13 +18,22 @@ def _safe_print(text: str) -> None:
         print(text.encode("ascii", "replace").decode("ascii"))
 
 
+def _safe_input(prompt: str = "") -> str:
+    """Read a line, exiting gracefully if stdin closes (EOF) or the user interrupts."""
+    try:
+        return input(prompt)
+    except (EOFError, KeyboardInterrupt):
+        _safe_print("\nThanks for playing!")
+        sys.exit()
+
+
 def get_player_choice(options, aliases=None, prompt="Enter your choice: "):
     """Prompt until the player picks a valid option (by number or alias). Returns 0-based index."""
     aliases = aliases or {}
     while True:
         for i, option in enumerate(options, 1):
             _safe_print(f"{i}. {option}")
-        choice = input(prompt).strip().lower()
+        choice = _safe_input(prompt).strip().lower()
         if choice in {"quit", "q", "exit"}:
             _safe_print("Thanks for playing!")
             sys.exit()
@@ -109,7 +118,7 @@ def day_menu(state: dict) -> int:
 def ask_replay() -> bool:
     """Ask to play again; return True for yes, False for no."""
     while True:
-        response = input("\nPlay again? (y/n): ").strip().lower()
+        response = _safe_input("\nPlay again? (y/n): ").strip().lower()
         if response in {"y", "yes"}:
             return True
         if response in {"n", "no"}:

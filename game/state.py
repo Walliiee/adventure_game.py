@@ -47,8 +47,13 @@ class GameState(TypedDict):
     companion_energized: bool
 
 
-def create_game_state(player_name: str, difficulty: str) -> GameState:
-    """Build a fresh game state for the given player and difficulty."""
+def create_game_state(
+    player_name: str,
+    difficulty: str,
+    primary_skill: str | None = None,
+    supplementary_skills: list[str] | None = None,
+) -> GameState:
+    """Build a fresh game state for the given player, difficulty, and Act 1 skills."""
     return {
         "name": player_name,
         "difficulty": difficulty,
@@ -66,8 +71,8 @@ def create_game_state(player_name: str, difficulty: str) -> GameState:
         "exhibition_won": False,
         "achievements_unlocked": [],
         # Act 1 skill choices carried into Act 2
-        "primary_skill": None,
-        "supplementary_skills": [],
+        "primary_skill": primary_skill,
+        "supplementary_skills": list(supplementary_skills) if supplementary_skills else [],
         "inventory": {"healing_herb": 2, "capture_charm": 1},
         # Companion abilities and economy
         "coins": 10,
