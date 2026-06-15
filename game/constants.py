@@ -5,6 +5,7 @@ Data is loaded from JSON files in data/ at startup, with hardcoded fallbacks.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -14,18 +15,43 @@ def _load_json(filename: str, fallback: list | dict) -> list | dict:
     """Load a JSON data file, returning fallback if file is missing or corrupt."""
     path = _DATA_DIR / filename
     try:
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
+    except FileNotFoundError:
         return fallback
+    except json.JSONDecodeError as exc:
+        # Don't silently fall back on a malformed data file — surface it so a typo
+        # in data/*.json can't quietly disable a whole system (NPCs, shop, etc.).
+        print(
+            f"Warning: data/{filename} is not valid JSON ({exc}); using fallback data.",
+            file=sys.stderr,
+        )
+        return fallback
+
+
+def _normalize_creature(creature: dict) -> dict:
+    """Ensure a creature has the keys the engine reads.
+
+    Content in data/creatures.json describes creatures with difficulty/personality,
+    while the engine reads size ('small'/'big') and temperament. Derive the engine
+    keys when they're missing so JSON content and the hardcoded fallback share one
+    schema and the capture/encounter code can't KeyError on either source.
+    """
+    if "size" not in creature:
+        difficulty = creature.get("difficulty", 1)
+        try:
+            creature["size"] = "small" if int(difficulty) <= 2 else "big"
+        except (TypeError, ValueError):
+            creature["size"] = "small"
+    if "temperament" not in creature:
+        creature["temperament"] = creature.get("personality", "curious")
+    return creature
 
 
 def _load_creatures() -> list[dict]:
     data = _load_json("creatures.json", [])
-    if data:
-        return data
-    # Fallback: hardcoded defaults
-    return _CREATURES_FALLBACK
+    creatures = data if data else _CREATURES_FALLBACK
+    return [_normalize_creature(dict(c)) for c in creatures]
 
 
 def _load_regions() -> tuple[list[dict], tuple, tuple, dict, dict]:

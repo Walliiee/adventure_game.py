@@ -17,7 +17,7 @@ _NPC_DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "npcs.json"
 def _load_npcs() -> list:
     """Load NPC data from JSON."""
     try:
-        with open(_NPC_DATA_PATH) as f:
+        with open(_NPC_DATA_PATH, encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []

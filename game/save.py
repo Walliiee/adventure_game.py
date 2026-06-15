@@ -34,7 +34,7 @@ def _deserialize(data: dict) -> GameState:
 def save_game(state: GameState, path: Path | None = None) -> None:
     """Persist game state to JSON."""
     path = path or DEFAULT_SAVE_PATH
-    path.write_text(json.dumps(_serialize(state), indent=2))
+    path.write_text(json.dumps(_serialize(state), indent=2), encoding="utf-8")
 
 
 def load_game(path: Path | None = None) -> GameState | None:
@@ -43,7 +43,7 @@ def load_game(path: Path | None = None) -> GameState | None:
     if not path.exists():
         return None
     try:
-        data = json.loads(path.read_text())
+        data = json.loads(path.read_text(encoding="utf-8"))
         return _deserialize(data)
     except (json.JSONDecodeError, KeyError, TypeError):
         return None

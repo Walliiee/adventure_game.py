@@ -10,6 +10,9 @@ from game.act1 import run_act1
 def main(quick_test: bool = False) -> None:
     print("Welcome to Wildlands: Orb Catcher Adventure!\n")
 
+    primary_skill: str | None = None
+    supplementary_skills: list[str] = []
+
     if quick_test:
         # Skip Act 1: go straight to Ridgecamp (Act 2) for testing.
         player_name = "Test"
@@ -17,7 +20,7 @@ def main(quick_test: bool = False) -> None:
         print("(Test mode: skipping Act 1, name=Test, difficulty=story)\n")
     else:
         # Full journey: Act 1 (build character, train 7→10) then Act 2.
-        ready, player_name = run_act1(skip_intro=False)
+        ready, player_name, primary_skill, supplementary_skills = run_act1(skip_intro=False)
         if not ready:
             print("Thanks for playing. Come back when you're ready to train!")
             return
@@ -25,7 +28,9 @@ def main(quick_test: bool = False) -> None:
         difficulty = choose_difficulty()
 
     while True:
-        state = create_game_state(player_name, difficulty)
+        state = create_game_state(
+            player_name, difficulty, primary_skill, supplementary_skills
+        )
         run_session(state)
         if not ask_replay():
             print("Thanks for playing Wildlands: Orb Catcher Adventure!")

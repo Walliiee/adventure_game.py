@@ -10,6 +10,7 @@ from game.act1.constants import (
     SUPPLEMENTARY_THRESHOLD,
 )
 from game.act1.questions import SOURCE_SKILLS
+from game.cli import _safe_input
 from game.act1.state import (
     Act1State,
     actions_until_year_three,
@@ -29,7 +30,7 @@ COACHING_TIPS = {
 
 
 def ask_act1_name() -> str:
-    name = input("What is your name? ").strip()
+    name = _safe_input("What is your name? ").strip()
     return name or "Keeper"
 
 
@@ -40,7 +41,7 @@ def choose_source() -> str | None:
         print(f"  {i}. {source}")
     print("  q. Quit")
     while True:
-        choice = input("Choice (1-5 or q): ").strip().lower()
+        choice = _safe_input("Choice (1-5 or q): ").strip().lower()
         if choice in ("q", "quit"):
             return None
         if choice.isdigit() and 1 <= int(choice) <= len(SOURCES):
@@ -55,7 +56,7 @@ def choose_skill_for_source(state: Act1State, source: str) -> str:
     for i, skill in enumerate(options, 1):
         print(f"  {i}. {skill} (current: {state['skills'][skill]})")
     while True:
-        choice = input(f"Choice (1-{len(options)}): ").strip()
+        choice = _safe_input(f"Choice (1-{len(options)}): ").strip()
         if choice.isdigit() and 1 <= int(choice) <= len(options):
             return options[int(choice) - 1]
         print("Enter a number from the list.")
@@ -72,7 +73,7 @@ def ask_question(skill: str, question: dict) -> bool:
     letters = "abcd"[: len(opts)]
     prompt = f"Answer (1-{len(opts)} or a-{letters}): "
     while True:
-        raw = input(prompt).strip().lower()
+        raw = _safe_input(prompt).strip().lower()
         idx = None
         if raw.isdigit() and 1 <= int(raw) <= len(opts):
             idx = int(raw) - 1
@@ -140,7 +141,7 @@ def choose_primary(state: Act1State) -> str | None:
     for i, skill in enumerate(SKILLS, 1):
         print(f"  {i}. {skill}")
     while True:
-        choice = input("Primary (1-4): ").strip()
+        choice = _safe_input("Primary (1-4): ").strip()
         if choice.isdigit() and 1 <= int(choice) <= 4:
             return SKILLS[int(choice) - 1]
         print("Enter 1, 2, 3, or 4.")
@@ -156,7 +157,7 @@ def choose_supplementary(state: Act1State) -> str | None:
     for i, skill in enumerate(remaining, 1):
         print(f"  {i}. {skill}")
     while True:
-        choice = input("Choice: ").strip()
+        choice = _safe_input("Choice: ").strip()
         if choice.isdigit() and 1 <= int(choice) <= len(remaining):
             return remaining[int(choice) - 1]
         print("Enter a number from the list.")

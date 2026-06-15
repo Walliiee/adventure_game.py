@@ -30,10 +30,12 @@ def year_completion_message(actions: int) -> str | None:
     return f"\n--- Year {completed_year} of 3 complete. Keep training! ---"
 
 
-def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
+def run_act1(skip_intro: bool = False) -> tuple[bool, str, str | None, list[str]]:
     """
-    Run the training phase (ages 7→10). Returns (True, player_name) when ready
-    to start Act 2, or (False, player_name) if the player quits.
+    Run the training phase (ages 7→10).
+
+    Returns (ready, player_name, primary_skill, supplementary_skills). When ready
+    is True the trained skills are carried into Act 2; on quit, ready is False.
     """
     if not skip_intro:
         print("\n" + "=" * 50)
@@ -69,7 +71,7 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
         source = act1_cli.choose_source()
         if source is None:
             print("Training paused. Come back when you're ready.")
-            return False, name
+            return False, name, None, []
 
         skill = act1_cli.choose_skill_for_source(state, source)
         q = choose_question(state, source, skill)
@@ -88,4 +90,4 @@ def run_act1(skip_intro: bool = False) -> tuple[bool, str]:
             global _last_state
             _last_state = state
             act1_cli.print_ready_message(state)
-            return True, name
+            return True, name, state["primary"], list(state["supplementary"])

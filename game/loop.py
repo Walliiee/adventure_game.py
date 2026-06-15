@@ -1,7 +1,7 @@
 """
 Main game loop: one session from intro until win, quit, or game over.
 """
-from game.cli import display_intro, print_stats, day_menu
+from game.cli import display_intro, print_stats, day_menu, _safe_input
 from game.world import choose_region, find_creature, describe_region, get_npc_scene
 from game.capture import attempt_capture
 from game.exhibition import run_exhibition
@@ -42,7 +42,7 @@ def _inventory_menu(state: dict) -> None:
         item = ITEMS[item_id]
         print(f"  {i}. {item['name']} x{non_empty[item_id]}")
     try:
-        choice = input("Pick a number (or Enter to cancel): ").strip()
+        choice = _safe_input("Pick a number (or Enter to cancel): ").strip()
         if choice == "":
             return
         idx = int(choice) - 1
