@@ -1,4 +1,5 @@
 """Tests for the 6 ending conditions."""
+from game.constants import REGION_IDS
 from game.endings import determine_ending
 from game.state import create_game_state
 
@@ -30,7 +31,7 @@ class TestEndings:
         assert determine_ending(s) != "master_keeper"
 
     def test_explorer_all_regions(self):
-        s = _state_with(regions={"meadow", "ruins", "river", "canyon", "forest"})
+        s = _state_with(regions=set(REGION_IDS))
         assert determine_ending(s) == "explorer"
 
     def test_gentle_one_more_leaves_than_catches(self):
